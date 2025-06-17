@@ -28,7 +28,7 @@ export default function WebsiteEntrance() {
             className={`tile tile-${index % 9}`} // voor kleurvariatie
           >
             <div className="tile-title">{site.name}</div>
-            <div className="tile-url">{site.url.replace("https://", "")}</div>
+         
           </a>
         ))}
       </div>
