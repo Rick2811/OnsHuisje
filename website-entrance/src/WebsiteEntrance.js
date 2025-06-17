@@ -11,7 +11,12 @@ const websites = [
   { name: "Rebo Groep", url: "https://rebowonenhuur.nl/zoekopdracht/" },
   { name: "Huislijn", url: "https://www.huislijn.nl/huurwoning/nederland/gelderland?c-maxPrice=1200&c-municipality=Nijmegen" },
   { name: "Ik wil huren", url: "https://ikwilhuren.nu/aanbod/" },
-  { name: "Entree", url: "https://www.entree.nu/inloggen-of-inschrijven/" }
+  { name: "Entree", url: "https://www.entree.nu/inloggen-of-inschrijven/" },
+  { name: "Pararius", url: "https://www.pararius.nl/huurwoningen/nijmegen" },
+  { name: "Funda Huur", url: "https://www.funda.nl/zoeken/huur?selected_area=[%22nijmegen%22]&price=%220-1200%22" },
+  { name: "Huurstunt", url: "https://www.huurstunt.nl/huren/nijmegen/+5km/0-1250/" },
+  { name: "Hans Janssen Makelaars", url: "https://www.hansjanssen.nl/wonen/zoeken/heel-nederland/huur/" },
+  { name: "Kamernet", url: "https://kamernet.nl/huren/huurwoningen-nijmegen?searchview=1&maxRent=12&minSize=14&radius=5&pageNo=1&sort=1" }
 ];
 
 export default function WebsiteEntrance() {
@@ -28,7 +33,6 @@ export default function WebsiteEntrance() {
             className={`tile tile-${index % 9}`} // voor kleurvariatie
           >
             <div className="tile-title">{site.name}</div>
-         
           </a>
         ))}
       </div>
