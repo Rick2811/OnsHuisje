@@ -4,43 +4,64 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Kookboek</title>
-  <link rel="stylesheet" href="styles.css">
   <style>
-    /* Kleine, simpele styling – pas aan naar smaak */
-    :root { --border:#e5e7eb; --bg:#f8fafc; --ink:#111827; --muted:#6b7280; }
-    * { box-sizing: border-box; }
+    :root { --border:#e5e7eb; --bg:#f5f7fb; --ink:#111827; --muted:#6b7280; }
+    * { box-sizing:border-box; }
     body { margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; color:var(--ink); background:var(--bg); }
-    header { position:sticky; top:0; display:flex; gap:.5rem; align-items:center; padding:.75rem 1rem; background:#fff; border-bottom:1px solid var(--border); }
+
+    header { position:sticky; top:0; display:flex; gap:.5rem; align-items:center; padding:.75rem 1rem; background:#fff; border-bottom:1px solid var(--border); z-index:10; }
     h1 { font-size:1.1rem; margin:0; }
     .spacer { flex:1; }
-    .btn { display:inline-flex; align-items:center; justify-content:center; border:1px solid var(--border); background:#fff; height:36px; width:36px; border-radius:999px; font-size:20px; cursor:pointer; }
+    .tools { display:flex; gap:.5rem; align-items:center; }
+
+    .btn { display:inline-flex; align-items:center; justify-content:center; border:1px solid var(--border); background:#fff; padding:0 .9rem; height:38px; border-radius:10px; cursor:pointer; }
     .btn:hover { background:#f3f4f6; }
-    .wrap { max-width:1100px; margin:1rem auto; padding:0 1rem; display:grid; grid-template-columns: 280px 1fr; gap:1rem; }
+    .btn-pill { width:36px; height:36px; padding:0; border-radius:999px; }
+    .btn-primary { background:#111827; border-color:#111827; color:#fff; }
+
+    .input { height:38px; padding:0 .65rem; border:1px solid var(--border); border-radius:10px; outline:0; background:#fff; }
+    .input:focus { box-shadow:0 0 0 3px rgba(59,130,246,.2); border-color:#93c5fd; }
+
+    .wrap { max-width:1100px; margin:1rem auto; padding:0 1rem; display:grid; grid-template-columns:280px 1fr; gap:1rem; }
+    @media (max-width: 800px) { .wrap { grid-template-columns:1fr; } }
+
     nav, main { background:#fff; border:1px solid var(--border); border-radius:12px; }
     nav { padding:.5rem; }
     #tabList { list-style:none; padding:0; margin:0; max-height:70vh; overflow:auto; }
     #tabList li { margin:.25rem 0; }
-    .tab-btn { width:100%; display:flex; align-items:center; justify-content:space-between; gap:.5rem; padding:.5rem .75rem; border:1px solid transparent; border-radius:10px; background:transparent; cursor:pointer; }
+    .tab-btn { width:100%; display:flex; align-items:center; justify-content:space-between; gap:.5rem; padding:.55rem .75rem; border:1px solid transparent; border-radius:10px; background:transparent; cursor:pointer; }
     .tab-btn:hover { background:#f3f4f6; }
     .tab-btn.active { background:#111827; color:#fff; box-shadow:0 1px 2px rgba(0,0,0,.08); }
     .tab-actions { opacity:0; transition:opacity .15s; display:flex; gap:.25rem; }
     .tab-btn:hover .tab-actions { opacity:1; }
-    .chip { border:1px solid var(--border); border-radius:999px; padding:.1rem .4rem; font-size:.75rem; color:var(--muted); background:#fff; }
+
     main { padding:1rem 1.25rem; }
     .muted { color:var(--muted); }
-    .tools { display:flex; gap:.5rem; align-items:center; }
-    .input { height:36px; padding:0 .65rem; border:1px solid var(--border); border-radius:8px; outline:0; }
-    .input:focus { box-shadow:0 0 0 3px rgba(59,130,246,.2); }
-    @media (max-width: 800px) { .wrap { grid-template-columns: 1fr; } }
+    .chip { border:1px solid var(--border); border-radius:999px; padding:.1rem .5rem; font-size:.75rem; color:var(--muted); background:#fff; }
+    .card { border:1px solid var(--border); border-radius:10px; padding:.7rem .8rem; margin:.45rem 0; background:#fff; }
+    .card-head { display:flex; align-items:center; justify-content:space-between; gap:.5rem; }
+
+    /* Modal */
+    dialog.modal { border:0; border-radius:16px; padding:0; max-width:720px; width:96%; box-shadow:0 10px 30px rgba(0,0,0,.15); overflow:hidden; background:#fff; }
+    dialog::backdrop { background:rgba(0,0,0,.35); }
+    .modal-header { display:flex; align-items:center; justify-content:space-between; padding:.9rem 1.1rem; border-bottom:1px solid var(--border); background:#f8fafc; }
+    .modal-body { padding:1rem 1.1rem; }
+    .modal-actions { display:flex; gap:.5rem; justify-content:flex-end; padding:.9rem 1.1rem; border-top:1px solid var(--border); background:#f9fafb; }
+    .form-grid { display:grid; gap:.8rem; grid-template-columns:1fr; }
+    @media (min-width:700px){ .two-col{ grid-template-columns:1fr 1fr; } }
+    .field { display:flex; flex-direction:column; gap:.35rem; }
+    .field label { font-size:.9rem; color:#334155; }
+    .textarea { width:100%; border:1px solid var(--border); border-radius:10px; padding:.55rem .7rem; outline:0; background:#fff; min-height:120px; resize:vertical; }
+    .input, .textarea:focus { box-shadow:0 0 0 3px rgba(59,130,246,.2); border-color:#93c5fd; }
   </style>
 </head>
 <body>
   <header>
-    <h1>Rosan's & Rick's Kookboek</h1>
+    <h1>Kookboek</h1>
     <div class="spacer"></div>
     <div class="tools">
-      <input id="search" class="input" placeholder="Zoek tab…" />
-      <button id="addBtn" class="btn" title="Nieuwe tab toevoegen" aria-label="Nieuwe tab">+</button>
+      <input id="search" class="input" placeholder="Zoek recept op titel…" />
+      <button id="addBtn" class="btn btn-pill" title="Nieuwe categorie" aria-label="Nieuwe categorie">+</button>
     </div>
   </header>
 
@@ -49,54 +70,54 @@
       <ul id="tabList"></ul>
     </nav>
 
- <main>
-  <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:0.5rem;">
-    <h2 id="activeTitle" style="margin:0;"></h2>
-    <button id="addRecipeBtn" class="btn" title="Nieuw recept" aria-label="Nieuw recept">+</button>
+    <main>
+      <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:0.5rem;">
+        <h2 id="activeTitle" style="margin:0;"></h2>
+        <button id="addRecipeBtn" class="btn btn-pill" title="Nieuw recept" aria-label="Nieuw recept">+</button>
+      </div>
+      <p class="muted" style="margin-top:0;">Recepten onder <span id="activeName" class="chip"></span>:</p>
+      <ul id="recipeList" style="list-style:none; padding:0; margin:0;"></ul>
+    </main>
   </div>
 
-  <p class="muted" style="margin-top:0;">
-    Recepten onder <span id="activeName" class="chip"></span>:
-  </p>
-
-  <ul id="recipeList" style="list-style:none; padding:0; margin:0;"></ul>
-</main>
-
-<!-- Recept toevoegen modal -->
-<dialog id="recipeDialog" style="border:1px solid #e5e7eb; border-radius:12px; padding:0; max-width:640px; width:95%;">
-  <form id="recipeForm" method="dialog" style="padding:1rem; display:grid; gap:.75rem;">
-    <h3 style="margin:0 0 .25rem; font-size:1.1rem;">Nieuw recept</h3>
-
-    <label> Titel
-      <input id="fTitle" class="input" required />
-    </label>
-
-    <div style="display:grid; grid-template-columns:1fr 1fr; gap:.5rem;">
-      <label> Bereidingstijd (min)
-        <input id="fPrep" class="input" type="number" min="0" step="1" />
-      </label>
-      <label> Kooktijd (min)
-        <input id="fCook" class="input" type="number" min="0" step="1" />
-      </label>
-    </div>
-
-    <label> Ingrediënten (één per regel)
-      <textarea id="fIngr" class="input" rows="5" placeholder="250g pasta&#10;2 tomaten&#10;..."></textarea>
-    </label>
-
-    <label> Uitleg / stappen
-      <textarea id="fSteps" class="input" rows="6" placeholder="Stap 1: ...&#10;Stap 2: ..."></textarea>
-    </label>
-
-    <div style="display:flex; gap:.5rem; justify-content:flex-end; margin-top:.25rem;">
-      <button type="reset" id="cancelRecipe" class="btn" value="cancel">Annuleren</button>
-      <button type="submit" class="btn" style="width:auto; padding:0 .9rem;">Opslaan</button>
-    </div>
-  </form>
-</dialog>
-
-
-  </div>
+  <!-- Recept toevoegen -->
+  <dialog id="recipeDialog" class="modal">
+    <form id="recipeForm" method="dialog">
+      <div class="modal-header">
+        <h3 style="margin:0">Nieuw recept</h3>
+      </div>
+      <div class="modal-body">
+        <div class="form-grid">
+          <div class="field">
+            <label for="fTitle">Titel</label>
+            <input id="fTitle" class="input" required />
+          </div>
+          <div class="form-grid two-col">
+            <div class="field">
+              <label for="fPrep">Bereidingstijd (min)</label>
+              <input id="fPrep" class="input" type="number" min="0" step="1" />
+            </div>
+            <div class="field">
+              <label for="fCook">Kooktijd (min)</label>
+              <input id="fCook" class="input" type="number" min="0" step="1" />
+            </div>
+          </div>
+          <div class="field">
+            <label for="fIngr">Ingrediënten (één per regel)</label>
+            <textarea id="fIngr" class="textarea" placeholder="250g pasta&#10;2 tomaten&#10;..."></textarea>
+          </div>
+          <div class="field">
+            <label for="fSteps">Uitleg / stappen</label>
+            <textarea id="fSteps" class="textarea" placeholder="Stap 1: ...&#10;Stap 2: ..."></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button type="reset" id="cancelRecipe" class="btn" value="cancel">Annuleren</button>
+        <button type="submit" class="btn btn-primary">Opslaan</button>
+      </div>
+    </form>
+  </dialog>
 
   <script src="kookboek.js"></script>
 </body>
