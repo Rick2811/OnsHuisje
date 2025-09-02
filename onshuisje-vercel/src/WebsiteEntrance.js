@@ -9,7 +9,8 @@ const DEFAULT_TABS = [
 
 let tabs = [];
 let active = "";
-let recipes = {"Pastas": [
+let recipes = {
+  "Pastas": [
     {
       title: "Spaghetti aglio e olio",
       prep: 5,
@@ -24,7 +25,23 @@ let recipes = {"Pastas": [
       ],
       steps: "Kook de pasta. Fruit knoflook en chili in olie. Meng met pasta en serveer."
     }
-  ]}; // { [tab]: [{ title, prep, cook, ingredients[], steps }] }
+  ],
+  "soepen": [
+    {
+      title: "Pompoensoep",
+      prep: 10,
+      cook: 25,
+      ingredients: [
+        "600g pompoen",
+        "1 ui",
+        "1 teen knoflook",
+        "800 ml bouillon"
+      ],
+      steps: "Fruit ui en knoflook. Voeg pompoen en bouillon toe. Kook zacht en pureer."
+    }
+  ]
+};
+ // { [tab]: [{ title, prep, cook, ingredients[], steps }] }
 
 const $list = document.getElementById("tabList");
 const $add = document.getElementById("addBtn");
