@@ -1,5 +1,5 @@
 // Kookboek – tabs + recepten + zoeken op TITEL (alleen) – vanilla JS
-const STORAGE_KEY = "kookboek_tabs_v4";
+const STORAGE_KEY = "kookboek_tabs_v5";
 
 const DEFAULT_TABS = [
   "Pastas","soepen","bakken","schotels","overig","italiaans","hollandse pot",
@@ -9,6 +9,8 @@ const DEFAULT_TABS = [
 
 let tabs = [];
 let active = "";
+
+// ---- Hardcoded startdata (vul gerust aan) ----
 let recipes = {
   "Pastas": [
     {
@@ -40,8 +42,7 @@ let recipes = {
       steps: "Fruit ui en knoflook. Voeg pompoen en bouillon toe. Kook zacht en pureer."
     }
   ]
-};
- // { [tab]: [{ title, prep, cook, ingredients[], steps }] }
+}; // { [tab]: [{ title, prep, cook, ingredients[], steps }] }
 
 const $list = document.getElementById("tabList");
 const $add = document.getElementById("addBtn");
@@ -65,10 +66,21 @@ const $fSteps = document.getElementById("fSteps");
     const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
     tabs = Array.isArray(saved?.tabs) && saved.tabs.length ? saved.tabs : DEFAULT_TABS.slice();
     active = saved?.active && tabs.includes(saved.active) ? saved.active : tabs[0];
-    recipes = saved?.recipes || {};
+
+    // Belangrijk: gebruik hardcoded recipes als fallback
+    recipes = saved?.recipes || recipes;
+
   } catch {
-    tabs = DEFAULT_TABS.slice(); active = tabs[0]; recipes = {};
+    tabs = DEFAULT_TABS.slice();
+    active = tabs[0];
+    // laat de hardcoded `recipes` staan
   }
+
+  // Zorg dat alle tab-namen uit recipes in tabs staan
+  for (const t of Object.keys(recipes)) {
+    if (!tabs.includes(t)) tabs.push(t);
+  }
+
   render();
 })();
 
