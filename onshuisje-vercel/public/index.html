@@ -49,13 +49,14 @@
       <ul id="tabList"></ul>
     </nav>
 
-    <main>
-      <h2 id="activeTitle" style="margin:.25rem 0 0.5rem;"></h2>
-      <p class="muted" id="activeHint">
-        Hier kun je je recepten voor <span id="activeName" class="chip"></span> tonen.
-        Vervang dit met je eigen inhoud (lijst met recepten, linkjes, etc.).
-      </p>
-    </main>
+ <main>
+  <h2 id="activeTitle" style="margin:.25rem 0 0.5rem;"></h2>
+  <div class="tools" style="margin-bottom:0.5rem;">
+    <button id="addRecipeBtn" class="btn" title="Nieuw recept" aria-label="Nieuw recept">+</button>
+  </div>
+  <ul id="recipeList"></ul>
+</main>
+
   </div>
 
   <script src="kookboek.js"></script>
