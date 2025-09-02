@@ -9,7 +9,22 @@ const DEFAULT_TABS = [
 
 let tabs = [];
 let active = "";
-let recipes = {}; // { [tab]: [{ title, prep, cook, ingredients[], steps }] }
+let recipes = {"Pastas": [
+    {
+      title: "Spaghetti aglio e olio",
+      prep: 5,
+      cook: 10,
+      ingredients: [
+        "200g spaghetti",
+        "3 tenen knoflook",
+        "1/2 tl chilivlokken",
+        "3 el olijfolie",
+        "Zout, peper",
+        "Peterselie"
+      ],
+      steps: "Kook de pasta. Fruit knoflook en chili in olie. Meng met pasta en serveer."
+    }
+  ]}; // { [tab]: [{ title, prep, cook, ingredients[], steps }] }
 
 const $list = document.getElementById("tabList");
 const $add = document.getElementById("addBtn");
