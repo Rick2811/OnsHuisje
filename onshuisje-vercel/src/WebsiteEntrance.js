@@ -22,7 +22,9 @@ const websites = [
 export default function WebsiteEntrance() {
   return (
     <div className="container">
-      <h1 className="title">Kies een website om te bezoeken</h1>
+      <h1 className="title">Kies een website om te bezoeken joehoe
+  
+      </h1>
       <div className="grid">
         {websites.map((site, index) => (
           <a
