@@ -1,43 +1,63 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
-    <meta
-      name="description"
-      content="Web site created using create-react-app"
-    />
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
-    <!--
-      manifest.json provides metadata used when your web app is installed on a
-      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
-    -->
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <!--
-      Notice the use of %PUBLIC_URL% in the tags above.
-      It will be replaced with the URL of the `public` folder during the build.
-      Only files inside the `public` folder can be referenced from the HTML.
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Kookboek</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* Kleine, simpele styling – pas aan naar smaak */
+    :root { --border:#e5e7eb; --bg:#f8fafc; --ink:#111827; --muted:#6b7280; }
+    * { box-sizing: border-box; }
+    body { margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; color:var(--ink); background:var(--bg); }
+    header { position:sticky; top:0; display:flex; gap:.5rem; align-items:center; padding:.75rem 1rem; background:#fff; border-bottom:1px solid var(--border); }
+    h1 { font-size:1.1rem; margin:0; }
+    .spacer { flex:1; }
+    .btn { display:inline-flex; align-items:center; justify-content:center; border:1px solid var(--border); background:#fff; height:36px; width:36px; border-radius:999px; font-size:20px; cursor:pointer; }
+    .btn:hover { background:#f3f4f6; }
+    .wrap { max-width:1100px; margin:1rem auto; padding:0 1rem; display:grid; grid-template-columns: 280px 1fr; gap:1rem; }
+    nav, main { background:#fff; border:1px solid var(--border); border-radius:12px; }
+    nav { padding:.5rem; }
+    #tabList { list-style:none; padding:0; margin:0; max-height:70vh; overflow:auto; }
+    #tabList li { margin:.25rem 0; }
+    .tab-btn { width:100%; display:flex; align-items:center; justify-content:space-between; gap:.5rem; padding:.5rem .75rem; border:1px solid transparent; border-radius:10px; background:transparent; cursor:pointer; }
+    .tab-btn:hover { background:#f3f4f6; }
+    .tab-btn.active { background:#111827; color:#fff; box-shadow:0 1px 2px rgba(0,0,0,.08); }
+    .tab-actions { opacity:0; transition:opacity .15s; display:flex; gap:.25rem; }
+    .tab-btn:hover .tab-actions { opacity:1; }
+    .chip { border:1px solid var(--border); border-radius:999px; padding:.1rem .4rem; font-size:.75rem; color:var(--muted); background:#fff; }
+    main { padding:1rem 1.25rem; }
+    .muted { color:var(--muted); }
+    .tools { display:flex; gap:.5rem; align-items:center; }
+    .input { height:36px; padding:0 .65rem; border:1px solid var(--border); border-radius:8px; outline:0; }
+    .input:focus { box-shadow:0 0 0 3px rgba(59,130,246,.2); }
+    @media (max-width: 800px) { .wrap { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Kookboek</h1>
+    <div class="spacer"></div>
+    <div class="tools">
+      <input id="search" class="input" placeholder="Zoek tab…" />
+      <button id="addBtn" class="btn" title="Nieuwe tab toevoegen" aria-label="Nieuwe tab">+</button>
+    </div>
+  </header>
 
-      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
-      work correctly both with client-side routing and a non-root public URL.
-      Learn how to configure a non-root public URL by running `npm run build`.
-    -->
-    <title>React App</title>
-  </head>
-  <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
-    <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
+  <div class="wrap">
+    <nav aria-label="Categorieën">
+      <ul id="tabList"></ul>
+    </nav>
 
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
+    <main>
+      <h2 id="activeTitle" style="margin:.25rem 0 0.5rem;"></h2>
+      <p class="muted" id="activeHint">
+        Hier kun je je recepten voor <span id="activeName" class="chip"></span> tonen.
+        Vervang dit met je eigen inhoud (lijst met recepten, linkjes, etc.).
+      </p>
+    </main>
+  </div>
 
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
-    -->
-  </body>
+  <script src="kookboek.js"></script>
+</body>
 </html>
