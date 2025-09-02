@@ -1,6 +1,4 @@
-// Kookboek – tabs + recepten + zoeken op TITEL (alleen) – vanilla JS
-const STORAGE_KEY = "kookboek_tabs_v4";
-
+// Kookboek – gedeelde opslag via Vercel KV (Upstash) – zoekt op TITEL
 const DEFAULT_TABS = [
   "Pastas","soepen","bakken","schotels","overig","italiaans","hollandse pot",
   "smoothies","cocktails","aziatisch","korte bereiding","mexiaans",
@@ -27,29 +25,47 @@ const $fCook  = document.getElementById("fCook");
 const $fIngr  = document.getElementById("fIngr");
 const $fSteps = document.getElementById("fSteps");
 
-// Init
-(function init() {
-  try {
-    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
-    tabs = Array.isArray(saved?.tabs) && saved.tabs.length ? saved.tabs : DEFAULT_TABS.slice();
-    active = saved?.active && tabs.includes(saved.active) ? saved.active : tabs[0];
-    recipes = saved?.recipes || {};
-  } catch {
-    tabs = DEFAULT_TABS.slice(); active = tabs[0]; recipes = {};
+// ------- API helpers -------
+async function apiLoad() {
+  const res = await fetch('/api/recipes', { cache: 'no-store' });
+  if (!res.ok) return null;
+  return await res.json();
+}
+let saveTimer = null;
+function scheduleSave() {
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(apiSaveAll, 300); // debounce om minder writes te doen
+}
+async function apiSaveAll() {
+  await fetch('/api/recipes', {
+    method: 'POST',
+    headers: { 'Content-Type':'application/json' },
+    body: JSON.stringify({ type: 'set-all', data: { tabs, recipes } })
+  });
+}
+
+// ------- Init -------
+(async function init() {
+  const server = await apiLoad();
+  if (server && Array.isArray(server.tabs)) {
+    tabs = server.tabs.length ? server.tabs : DEFAULT_TABS.slice();
+    recipes = server.recipes || {};
+  } else {
+    // Eerste keer: defaults vullen en naar server schrijven
+    tabs = DEFAULT_TABS.slice();
+    recipes = {};
+    await apiSaveAll();
   }
+  active = tabs[0] || "";
   render();
 })();
 
-function save() {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify({ tabs, active, recipes }));
-}
-
-// ---------- RENDER ----------
+// ------- Render -------
 function render() {
   const q = ($search?.value || "").trim().toLowerCase();
   $list.innerHTML = "";
 
-  // Toon ALLE tabs (niet filteren)
+  // Alle categorieën tonen
   tabs.forEach(name => {
     const li = document.createElement("li");
     const btn = document.createElement("button");
@@ -63,10 +79,10 @@ function render() {
     const actions = document.createElement("span");
     actions.className = "tab-actions";
 
-    const rename = mkSmallBtn("✎", "Hernoem tab");
+    const rename = mkSmallBtn("✎", "Hernoem categorie");
     rename.onclick = (e) => { e.stopPropagation(); renameTab(name); };
 
-    const del = mkSmallBtn("×", "Verwijder tab");
+    const del = mkSmallBtn("×", "Verwijder categorie");
     del.onclick = (e) => { e.stopPropagation(); removeTab(name); };
 
     actions.append(rename, del);
@@ -78,7 +94,7 @@ function render() {
   if (q) {
     $title.textContent = "Zoekresultaten";
     $name.textContent = "—";
-    renderSearchResults(q);   // zoek ALLEEN in titel
+    renderSearchResults(q);
   } else {
     $title.textContent = active || "Geen tab geselecteerd";
     $name.textContent = active || "—";
@@ -93,22 +109,24 @@ function renderRecipes() {
   const list = recipes[active] || [];
   if (list.length === 0) {
     const li = document.createElement("li");
-    li.className = "muted"; li.textContent = "Nog geen recepten in deze categorie.";
-    $recipeList.appendChild(li); return;
+    li.className = "muted";
+    li.textContent = "Nog geen recepten in deze categorie.";
+    $recipeList.appendChild(li);
+    return;
   }
 
   list.forEach((rec, idx) => $recipeList.appendChild(recipeCard(rec, () => {
-    // verwijderen zonder confirm
     recipes[active].splice(idx, 1);
-    save(); renderRecipes();
+    scheduleSave();
+    renderRecipes();
   })));
 }
 
-// Alleen op titel zoeken
+// Alleen op TITEL zoeken
 function renderSearchResults(q) {
   $recipeList.innerHTML = "";
-  const results = [];
   const needle = q.toLowerCase();
+  const results = [];
 
   tabs.forEach(tab => {
     (recipes[tab] || []).forEach((rec) => {
@@ -119,14 +137,16 @@ function renderSearchResults(q) {
 
   if (results.length === 0) {
     const li = document.createElement("li");
-    li.className = "muted"; li.textContent = "Geen recepten gevonden.";
-    $recipeList.appendChild(li); return;
+    li.className = "muted";
+    li.textContent = "Geen recepten gevonden.";
+    $recipeList.appendChild(li);
+    return;
   }
 
   results.forEach(({ tab, rec }) => {
-    const card = recipeCard(rec, null, tab); // tonen met tablabel
+    const card = recipeCard(rec, null, tab);
     card.style.cursor = "pointer";
-    card.onclick = () => { setActive(tab); $search.value = ""; }; // naar tab springen
+    card.onclick = () => { setActive(tab); $search.value = ""; };
     $recipeList.appendChild(card);
   });
 }
@@ -163,21 +183,21 @@ function recipeCard(rec, onDelete, tabLabel) {
   return li;
 }
 
-// ---------- Mutaties ----------
-function setActive(name) { active = name; save(); render(); }
+// ------- Mutaties -------
+function setActive(name) { active = name; render(); }
 
 function addTab() {
   const name = (prompt("Naam van de nieuwe categorie?") || "").trim();
   if (!name) return;
   if (tabs.some(t => t.toLowerCase() === name.toLowerCase())) { alert("Bestaat al."); return; }
-  tabs.push(name); active = name; save(); render();
+  tabs.push(name); active = name; scheduleSave(); render();
 }
 
 function removeTab(name) {
   tabs = tabs.filter(t => t !== name);
   delete recipes[name];
   if (active === name) active = tabs[0] || "";
-  save(); render();
+  scheduleSave(); render();
 }
 
 function renameTab(name) {
@@ -187,10 +207,10 @@ function renameTab(name) {
   if (recipes[name]) { recipes[next] = recipes[name]; delete recipes[name]; }
   tabs = tabs.map(t => (t === name ? next : t));
   if (active === name) active = next;
-  save(); render();
+  scheduleSave(); render();
 }
 
-// ---------- Recepten ----------
+// ------- Recepten -------
 $addRecipeBtn?.addEventListener("click", () => {
   if (!active) return;
   $fTitle.value = ""; $fPrep.value = ""; $fCook.value = "";
@@ -210,15 +230,18 @@ $form?.addEventListener("submit", (e) => {
   if (!rec.title) { $fTitle.focus(); return; }
   recipes[active] = recipes[active] || [];
   recipes[active].push(rec);
-  save(); renderRecipes(); $dlg.close();
+  scheduleSave();
+  renderRecipes();
+  $dlg.close();
 });
 
 document.getElementById("cancelRecipe")?.addEventListener("click", () => $dlg.close());
 
-// ---------- Helpers ----------
+// ------- Helpers -------
 function mkSmallBtn(text, title) {
   const b = document.createElement("button");
-  b.className = "btn"; b.style.height = "26px"; b.style.width = "26px"; b.style.padding = "0"; b.style.fontSize="16px";
+  b.className = "btn";
+  b.style.height = "26px"; b.style.width = "26px"; b.style.padding = "0"; b.style.fontSize = "16px";
   b.title = title; b.textContent = text; return b;
 }
 function escapeHtml(s){return String(s).replace(/[&<>"']/g,(m)=>({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;" }[m]));}
