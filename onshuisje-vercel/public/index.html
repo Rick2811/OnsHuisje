@@ -50,12 +50,51 @@
     </nav>
 
  <main>
-  <h2 id="activeTitle" style="margin:.25rem 0 0.5rem;"></h2>
-  <div class="tools" style="margin-bottom:0.5rem;">
+  <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:0.5rem;">
+    <h2 id="activeTitle" style="margin:0;"></h2>
     <button id="addRecipeBtn" class="btn" title="Nieuw recept" aria-label="Nieuw recept">+</button>
   </div>
-  <ul id="recipeList"></ul>
+
+  <p class="muted" style="margin-top:0;">
+    Recepten onder <span id="activeName" class="chip"></span>:
+  </p>
+
+  <ul id="recipeList" style="list-style:none; padding:0; margin:0;"></ul>
 </main>
+
+<!-- Recept toevoegen modal -->
+<dialog id="recipeDialog" style="border:1px solid #e5e7eb; border-radius:12px; padding:0; max-width:640px; width:95%;">
+  <form id="recipeForm" method="dialog" style="padding:1rem; display:grid; gap:.75rem;">
+    <h3 style="margin:0 0 .25rem; font-size:1.1rem;">Nieuw recept</h3>
+
+    <label> Titel
+      <input id="fTitle" class="input" required />
+    </label>
+
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:.5rem;">
+      <label> Bereidingstijd (min)
+        <input id="fPrep" class="input" type="number" min="0" step="1" />
+      </label>
+      <label> Kooktijd (min)
+        <input id="fCook" class="input" type="number" min="0" step="1" />
+      </label>
+    </div>
+
+    <label> Ingrediënten (één per regel)
+      <textarea id="fIngr" class="input" rows="5" placeholder="250g pasta&#10;2 tomaten&#10;..."></textarea>
+    </label>
+
+    <label> Uitleg / stappen
+      <textarea id="fSteps" class="input" rows="6" placeholder="Stap 1: ...&#10;Stap 2: ..."></textarea>
+    </label>
+
+    <div style="display:flex; gap:.5rem; justify-content:flex-end; margin-top:.25rem;">
+      <button type="reset" id="cancelRecipe" class="btn" value="cancel">Annuleren</button>
+      <button type="submit" class="btn" style="width:auto; padding:0 .9rem;">Opslaan</button>
+    </div>
+  </form>
+</dialog>
+
 
   </div>
 
