@@ -1,11 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 function WebsiteEntrance() {
   const [tab, setTab] = useState('');
   const [recipe, setRecipe] = useState('');
+  const [recipes, setRecipes] = useState([]);
+
+  // Haal recepten op wanneer de tab verandert
+  useEffect(() => {
+    if (tab) {
+      fetchRecipes();
+    }
+  }, [tab]);
 
   async function saveRecipe() {
-    const response = await fetch('/api/saveRecipe', {
+    const response = await fetch('/api/saverecipe', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ tab, recipe }),
@@ -13,33 +21,53 @@ function WebsiteEntrance() {
 
     if (response.ok) {
       alert('Recept opgeslagen!');
+      fetchRecipes(); // Haal de nieuwste recepten op
+      setRecipe(''); // Reset het invoerveld
     } else {
       alert('Er ging iets mis bij het opslaan.');
     }
   }
 
+  async function fetchRecipes() {
+    const response = await fetch(`/api/getRecipes?tab=${tab}`);
+    if (response.ok) {
+      const data = await response.json();
+      setRecipes(data.recipes);
+    }
+  }
+
   return (
     <div>
-      <h1>Recepten Opslaan</h1>
-      <input
-        type="text"
-        placeholder="Tab"
-        value={tab}
-        onChange={(e) => setTab(e.target.value)}
-      />
-      <textarea
-        placeholder="Recept"
-        value={recipe}
-        onChange={(e) => setRecipe(e.target.value)}
-      />
-      <button onClick={saveRecipe}>Opslaan</button>
+      <h1>Kookboek</h1>
+      <div>
+        <input
+          type="text"
+          placeholder="Tab"
+          value={tab}
+          onChange={(e) => setTab(e.target.value)}
+        />
+      </div>
+      <div>
+        <textarea
+          placeholder="Voeg een recept toe"
+          value={recipe}
+          onChange={(e) => setRecipe(e.target.value)}
+        />
+        <button onClick={saveRecipe}>Opslaan</button>
+      </div>
+      <div>
+        <h2>Recepten in tab: {tab}</h2>
+        <ul>
+          {recipes.map((r, index) => (
+            <li key={index}>{r}</li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 }
 
-export default WebsiteEntrance;// Kookboek – tabs + recepten + zoeken op TITEL (alleen) – vanilla JS
-
-
+export default WebsiteEntrance;
 
 
 const STORAGE_KEY = "kookboek_tabs_v5";

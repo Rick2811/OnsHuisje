@@ -8,11 +8,12 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: 'Tab en recept zijn verplicht.' });
     }
 
-    // Voeg het recept toe aan de Redis-database
+    // Haal bestaande recepten op of maak een nieuwe lijst
     const key = `recipes:${tab}`;
     const existingRecipes = (await redis.get(key)) || [];
     existingRecipes.push(recipe);
 
+    // Sla de nieuwe lijst op in Redis
     await redis.set(key, existingRecipes);
 
     return res.status(200).json({ message: 'Recept opgeslagen!' });
