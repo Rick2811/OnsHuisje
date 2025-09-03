@@ -1,5 +1,4 @@
 
-<<<<<<< HEAD
 import React, { useState, useEffect } from 'react';
 
 function WebsiteEntrance() {
@@ -386,4 +385,4 @@ function escapeHtml(s){return String(s).replace(/[&<>"']/g,(m)=>({ "&":"&amp;","
 // Events
 $add?.addEventListener("click", addTab);
 $search?.addEventListener("input", render);
->>>>>>> parent of 3af1a47 (update databasse via vercel)
+
