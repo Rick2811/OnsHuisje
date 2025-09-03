@@ -1,4 +1,47 @@
-// Kookboek – tabs + recepten + zoeken op TITEL (alleen) – vanilla JS
+import React, { useState } from 'react';
+
+function WebsiteEntrance() {
+  const [tab, setTab] = useState('');
+  const [recipe, setRecipe] = useState('');
+
+  async function saveRecipe() {
+    const response = await fetch('/api/saveRecipe', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ tab, recipe }),
+    });
+
+    if (response.ok) {
+      alert('Recept opgeslagen!');
+    } else {
+      alert('Er ging iets mis bij het opslaan.');
+    }
+  }
+
+  return (
+    <div>
+      <h1>Recepten Opslaan</h1>
+      <input
+        type="text"
+        placeholder="Tab"
+        value={tab}
+        onChange={(e) => setTab(e.target.value)}
+      />
+      <textarea
+        placeholder="Recept"
+        value={recipe}
+        onChange={(e) => setRecipe(e.target.value)}
+      />
+      <button onClick={saveRecipe}>Opslaan</button>
+    </div>
+  );
+}
+
+export default WebsiteEntrance;// Kookboek – tabs + recepten + zoeken op TITEL (alleen) – vanilla JS
+
+
+
+
 const STORAGE_KEY = "kookboek_tabs_v5";
 
 const DEFAULT_TABS = [
