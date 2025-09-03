@@ -5,7 +5,137 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Kookboek</title>
   <style>
-    /* CSS-styling */
+    :root {
+      --border:#d6d3d1;     /* zachte rand */
+      --bg:#fdfbf7;         /* beige achtergrond */
+      --ink:#111111;        /* bijna zwart */
+      --muted:#555555;      /* donkergrijs */
+      --green:#1b4332;      /* donkergroen */
+      --green-2:#2d6a4f;    /* iets lichter groen */
+      --white:#ffffff;      /* wit */
+      --hover:#f7f4ee;      /* lichte beige hover */
+    }
+
+    * { box-sizing:border-box; }
+    body {
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color:var(--ink);
+      background:var(--bg);
+    }
+
+    /* Header */
+    header {
+      position:sticky; top:0;
+      display:flex; gap:.5rem; align-items:center;
+      padding:.75rem 1rem;
+      background:var(--white);
+      border-bottom:1px solid var(--border);
+      z-index:10;
+    }
+    h1 { font-size:1.1rem; margin:0; font-weight:700; color:var(--green); letter-spacing:.2px; }
+    .spacer { flex:1; }
+    .tools { display:flex; gap:.5rem; align-items:center; }
+
+    /* Buttons */
+    .btn {
+      display:inline-flex; align-items:center; justify-content:center;
+      border:1px solid var(--border); background:var(--white);
+      padding:0 .9rem; height:38px; border-radius:10px; cursor:pointer;
+      color:var(--ink);
+      transition: background .15s ease, transform .05s ease;
+    }
+    .btn:hover { background:var(--hover); }
+    .btn:active { transform: translateY(1px); }
+    .btn-pill { width:36px; height:36px; padding:0; border-radius:999px; }
+    .btn-primary { background:var(--green); border-color:var(--green); color:var(--white); }
+    .btn-primary:hover { background:var(--green-2); }
+
+    /* Inputs */
+    .input {
+      height:38px; padding:0 .65rem;
+      border:1px solid var(--border); border-radius:10px;
+      outline:0; background:var(--white); color:var(--ink);
+    }
+    .input::placeholder { color:#8a8a8a; }
+    .input:focus { box-shadow:0 0 0 3px rgba(27,67,50,.22); border-color:var(--green-2); }
+
+    /* Layout */
+    .wrap {
+      max-width:1100px; margin:1rem auto; padding:0 1rem;
+      display:grid; grid-template-columns:280px 1fr; gap:1rem;
+    }
+    @media (max-width: 800px) { .wrap { grid-template-columns:1fr; } }
+
+    nav, main { background:var(--white); border:1px solid var(--border); border-radius:12px; }
+    nav { padding:.5rem; }
+    #tabList { list-style:none; padding:0; margin:0; max-height:70vh; overflow:auto; }
+    #tabList li { margin:.25rem 0; }
+
+    /* Tabs */
+    .tab-btn {
+      width:100%; display:flex; align-items:center; justify-content:space-between;
+      gap:.5rem; padding:.55rem .75rem;
+      border:1px solid transparent; border-radius:10px;
+      background:transparent; cursor:pointer;
+      transition: background .15s ease, color .15s ease;
+      color:var(--ink);
+    }
+    .tab-btn:hover { background:var(--hover); }
+    .tab-btn.active {
+      background:var(--green); color:var(--white);
+      box-shadow:0 1px 2px rgba(0,0,0,.08);
+    }
+    .tab-actions { opacity:0; transition:opacity .15s; display:flex; gap:.25rem; }
+    .tab-btn:hover .tab-actions { opacity:1; }
+
+    /* Main paneel */
+    main { padding:1rem 1.25rem; }
+    .muted { color:var(--muted); }
+    .chip {
+      border:1px solid var(--border); border-radius:999px;
+      padding:.1rem .5rem; font-size:.75rem; color:var(--muted); background:var(--white);
+    }
+
+    /* Recept kaartjes */
+    .card {
+      border:1px solid var(--border); border-radius:10px;
+      padding:.7rem .8rem; margin:.45rem 0; background:var(--white);
+      transition: box-shadow .15s ease, transform .05s ease;
+    }
+    .card:hover { box-shadow:0 6px 18px rgba(0,0,0,.07); }
+    .card:active { transform: translateY(1px); }
+    .card-head { display:flex; align-items:center; justify-content:space-between; gap:.5rem; }
+    .card-title strong { font-weight:700; color:var(--green); }
+
+    /* Modal */
+    dialog.modal {
+      border:0; border-radius:16px; padding:0;
+      max-width:720px; width:96%;
+      box-shadow:0 10px 30px rgba(0,0,0,.25);
+      overflow:hidden; background:var(--white);
+    }
+    dialog::backdrop { background:rgba(0,0,0,.45); }
+    .modal-header {
+      display:flex; align-items:center; justify-content:space-between;
+      padding:.9rem 1.1rem; border-bottom:1px solid var(--border);
+      background:var(--green); color:var(--white);
+    }
+    .modal-body { padding:1rem 1.1rem; }
+    .modal-actions {
+      display:flex; gap:.5rem; justify-content:flex-end;
+      padding:.9rem 1.1rem; border-top:1px solid var(--border); background:var(--hover);
+    }
+    .form-grid { display:grid; gap:.8rem; grid-template-columns:1fr; }
+    @media (min-width:700px){ .two-col{ grid-template-columns:1fr 1fr; } }
+    .field { display:flex; flex-direction:column; gap:.35rem; }
+    .field label { font-size:.9rem; color:var(--green); font-weight:600; }
+    .textarea {
+      width:100%; border:1px solid var(--border); border-radius:10px;
+      padding:.55rem .7rem; outline:0; background:var(--white);
+      min-height:120px; resize:vertical; color:var(--ink);
+    }
+    .textarea:focus { box-shadow:0 0 0 3px rgba(27,67,50,.22); border-color:var(--green-2); }
   </style>
 </head>
 <body>
@@ -71,5 +201,7 @@
       </div>
     </form>
   </dialog>
+
+  <script src="kookboek.js"></script>
 </body>
 </html>
