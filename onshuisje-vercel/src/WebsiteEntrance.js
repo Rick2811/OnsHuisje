@@ -14,8 +14,9 @@ function WebsiteEntrance() {
   useEffect(() => {
     if (tab) {
       fetchRecipes();
-    }
-  }, [tab]);
+    }   console.log('Tabs:', tabs);
+  }
+  , [tab]);
 
   async function saveRecipe() {
     if (!tab || !recipe) {
@@ -49,6 +50,7 @@ function WebsiteEntrance() {
   }
 
   function addTab() {
+      console.log('addTab functie wordt aangeroepen');
     const newTab = prompt('Naam van de nieuwe categorie?').trim();
     if (!newTab) return;
     if (tabs.includes(newTab)) {
