@@ -1,3 +1,4 @@
+
 <<<<<<< HEAD
 import React, { useState, useEffect } from 'react';
 
@@ -113,8 +114,7 @@ function WebsiteEntrance() {
 }
 
 export default WebsiteEntrance;
-=======
-// Kookboek – tabs + recepten + zoeken op TITEL (alleen) – vanilla JS
+
 const STORAGE_KEY = "kookboek_tabs_v5";
 
 const DEFAULT_TABS = [
