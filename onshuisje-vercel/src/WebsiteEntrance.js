@@ -252,8 +252,15 @@ $form?.addEventListener("submit", (e) => {
     steps: $fSteps.value.trim(),
   };
   if (!rec.title) { $fTitle.focus(); return; }
+
   recipes[active] = recipes[active] || [];
   recipes[active].push(rec);
+
+  // >>>>>>>>>> NIEUW: toon de popup met exact jouw snippet
+  const snippet = buildSnippet(active, rec);
+  showSnippetPopup(snippet);
+  // <<<<<<<<<< EINDE NIEUW
+
   save(); renderRecipes(); $dlg.close();
 });
 
@@ -266,6 +273,108 @@ function mkSmallBtn(text, title) {
   b.title = title; b.textContent = text; return b;
 }
 function escapeHtml(s){return String(s).replace(/[&<>"']/g,(m)=>({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;" }[m]));}
+
+// === NIEUW: snippet builder en popup ===
+function buildSnippet(category, rec) {
+  const cat = JSON.stringify(category); // houdt de aanhalingstekens
+
+  const ingLines = (rec.ingredients || [])
+    .map(i => `        ${JSON.stringify(i)}`)
+    .join(",\n");
+
+  return `${cat}: [
+    {
+      title: ${JSON.stringify(rec.title || "")},
+      prep: ${Number.isFinite(rec.prep) ? rec.prep : 0},
+      cook: ${Number.isFinite(rec.cook) ? rec.cook : 0},
+      ingredients: [
+${ingLines}
+      ],
+      steps: ${JSON.stringify(rec.steps || "")}
+    }
+  ],`;
+}
+
+function showSnippetPopup(snippetText) {
+  // overlay
+  const overlay = document.createElement("div");
+  overlay.style.position = "fixed";
+  overlay.style.inset = "0";
+  overlay.style.background = "rgba(0,0,0,0.6)";
+  overlay.style.display = "flex";
+  overlay.style.alignItems = "center";
+  overlay.style.justifyContent = "center";
+  overlay.style.zIndex = "9999";
+
+  // modal
+  const modal = document.createElement("div");
+  modal.style.background = "#121417";
+  modal.style.color = "white";
+  modal.style.padding = "16px";
+  modal.style.borderRadius = "12px";
+  modal.style.width = "min(800px, 95vw)";
+  modal.style.maxHeight = "80vh";
+  modal.style.overflow = "auto";
+  modal.style.border = "1px solid rgba(255,255,255,0.15)";
+  modal.style.boxShadow = "0 10px 30px rgba(0,0,0,0.4)";
+
+  const head = document.createElement("div");
+  head.style.display = "flex";
+  head.style.justifyContent = "space-between";
+  head.style.gap = "8px";
+
+  const h3 = document.createElement("h3");
+  h3.textContent = "Gegenereerde snippet";
+  h3.style.margin = "0";
+  h3.style.fontSize = "16px";
+
+  const closeBtn = document.createElement("button");
+  closeBtn.textContent = "Sluiten";
+  closeBtn.style.border = "1px solid #444";
+  closeBtn.style.background = "transparent";
+  closeBtn.style.color = "white";
+  closeBtn.style.padding = "4px 8px";
+  closeBtn.style.borderRadius = "6px";
+  closeBtn.onclick = () => document.body.removeChild(overlay);
+
+  head.append(h3, closeBtn);
+
+  const pre = document.createElement("pre");
+  pre.textContent = snippetText;
+  pre.style.whiteSpace = "pre-wrap";
+  pre.style.background = "rgba(0,0,0,0.35)";
+  pre.style.border = "1px solid rgba(255,255,255,0.1)";
+  pre.style.padding = "12px";
+  pre.style.borderRadius = "8px";
+  pre.style.marginTop = "12px";
+  pre.style.fontSize = "13px";
+
+  const actions = document.createElement("div");
+  actions.style.marginTop = "8px";
+  actions.style.display = "flex";
+  actions.style.gap = "8px";
+
+  const copyBtn = document.createElement("button");
+  copyBtn.textContent = "Kopieer";
+  copyBtn.style.border = "1px solid #444";
+  copyBtn.style.background = "transparent";
+  copyBtn.style.color = "white";
+  copyBtn.style.padding = "6px 10px";
+  copyBtn.style.borderRadius = "6px";
+  copyBtn.onclick = () => navigator.clipboard.writeText(snippetText);
+
+  actions.append(copyBtn);
+
+  modal.append(head, pre, actions);
+  overlay.appendChild(modal);
+
+  overlay.addEventListener("click", (e) => {
+    if (e.target === overlay) document.body.removeChild(overlay);
+  });
+
+  document.body.appendChild(overlay);
+}
+// === EINDE NIEUW ===
 
 // Events
 $add?.addEventListener("click", addTab);
