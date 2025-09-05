@@ -41,7 +41,29 @@ let recipes = {
       ],
       steps: "Fruit ui en knoflook. Voeg pompoen en bouillon toe. Kook zacht en pureer."
     }
-  ]
+  ],
+  "italiaans": [
+    {
+      title: "Lasagne in pan",
+      prep: 45,
+      cook: 45,
+      ingredients: [
+        "1 ui",
+        "1 knoflook teen",
+        "400 gram gehakt",
+        "1 pot tomaten basicilicum saus",
+        "1 pak lasagne bladen",
+        "1 pak becemel saus",
+        "1 kippenbouillon",
+        "Italiaanse kruiden",
+        "Zout",
+        "Peper",
+        "Geraspte kaas",
+        "1 potje tomaten puree"
+      ],
+      steps: "Stap 1 ui snipperen en in pan knoflook uit persen\nStap 2 gehakt bakken met de ui en kruiden toe ook peper en zout\nStap 3 voeg de kippenbouillon de tomaten saus en tomaten puree toe \nStap 4 breek de lasagne bladen in stukken en doe die er door heen \nStap 5 voeg de becemel saus toe en kaas en sluit de pan af"
+    }
+  ]
 }; // { [tab]: [{ title, prep, cook, ingredients[], steps }] }
 
 const $list = document.getElementById("tabList");
