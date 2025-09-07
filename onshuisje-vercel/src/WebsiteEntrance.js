@@ -190,6 +190,225 @@ let recipes = {
     steps: "Stap 1: Verwarm de oven voor op 200°C.\nStap 2: Verhit de olie en bak het gehakt rul met paprikapoeder, komijn, zout en peper.\nStap 3: Snijd de paprika's en peper; bak 3–4 minuten mee met het gehakt.\nStap 4: Verdeel de nacho's over een ovenschaal en schep het gehaktmengsel erover.\nStap 5: Bestrooi royaal met de geraspte kaas.\nStap 6: Bak 8–10 minuten tot de kaas gesmolten en licht goudbruin is.\nStap 7: Haal uit de oven en serveer met toefjes zure room (en extra peperringetjes naar smaak)."
   }
 ],
+"soepen": [
+    {
+      title: "Paprikasoep",
+      prep: 30,
+      cook: 0,
+      ingredients: [
+        "2 eetlepels olijfolie",
+        "2 uien (gesnipperd)",
+        "3 rode paprika's (in kleine blokjes, zonder zaadjes)",
+        "2 teentjes knoflook (fijngehakt)",
+        "1 eetlepel paprikapoeder",
+        "1 theelepel komijnpoeder (djinten)",
+        "mespunt chilipoeder",
+        "70 gram tomatenpuree (blikje)",
+        "400 gram tomatenblokjes (blik)",
+        "2 potten rundvleesbouillon met vlees",
+        "1 runderbouillontablet",
+        "25 gram vermicelli (verkruimeld)",
+        "circa 400 gram kidneybonen (blik)"
+      ],
+      steps: "Stap 1 Verwarm de olie in een grote soeppan en fruit de uien op een lage stand in circa 5 minuten lichtbruin.\nStap 2 Voeg de paprikablokjes, knoflook en specerijen toe en roerbak nog een paar minuten. Voeg de tomatenpuree en -blokjes toe en bak een paar minuten verder.\nStap 3 Neem een paar grote lepels van de soep uit de pan en pureer deze met een staafmixer. Doe de gepureerde soep weer terug in de pan en voeg de bouillon met vlees, 500 ml water, het bouillonblokje, de vermicelli en kidneybonen toe. Breng weer aan de kook en laat op een lage stand circa 10 minuten zachtjes pruttelen."
+    }
+  ],
+  "hollandse pot": [
+    {
+      title: "Krieltjes a la bonne femme",
+      prep: 30,
+      cook: 0,
+      ingredients: [
+        "100 gram spekjes",
+        "1 ui",
+        "150 gram champignons",
+        "1 pot met erwten en wortels",
+        "400 gram krieltjes"
+      ],
+      steps: "Stap 1 snipper de ui en snij de champignons\nStap 2 doe olie in een koekenpan en bak de spekjes op laag vuur aan\nStap 3 voeg ui en champignons toe en bak ze lichtbruin\nStap 4 haal alles uit de pan en bak de krieltjes goudbruin\nStap 5 voeg alles samen en warm op"
+    }
+  ],
+  "soepen": [
+    {
+      title: "Groentesoep",
+      prep: 30,
+      cook: 5,
+      ingredients: [
+        "Soepballetjes",
+        "1 liter runderbouillon",
+        "100 gram sperziebonen (afgehaald)",
+        "1 courgette (in plakjes)",
+        "100 gram bloemkoolroosjes (in kleine roosjes)",
+        "100 gram broccoli (in kleine roosjes)",
+        "1 bosje bladpeterselie (fijngehakt)"
+      ],
+      steps: "Stap 1 Breng de bouillon aan de kook en voeg alle groenten en de balletjes in één keer toe. Laat de soep nog ca. 5 minuten zonder deksel zachtjes doorkoken tot alles beetgaar is.\nStap 2 breng op smaak doormiddel van zout en peper"
+    }
+  ],
+  "overig": [
+    {
+      title: "Bladerdeegtaartjes",
+      prep: 30,
+      cook: 12,
+      ingredients: [
+        "8 plakken bladerdeeg",
+        "4 plakkenspek",
+        "4 champignons",
+        "5 eieren",
+        "15 gram peterselie"
+      ],
+      steps: "Stap 1 Verwarm de oven voor op 220 graden.Laat het bladerdeeg ontdooien. Leg twee plakjes bladerdeeg op elkaar en rol uit tot een plak van 20 bij 20 cm. Vouw de randjes van de bladerdeegplakken dubbel zodat er een opstaande rand ontstaat. Leg de bladerdeegtaartjes op een met bakpapier beklede bakplaat. Prik gaatjes in het deeg met een vork. Klop een ei los en bestrijk de bladerdeegtaartjes met het ei.\nStap 2 Snij de champignons in plakjes en de peterselie fijn. Verdeel de plakken ontbijtspek en de champignons over het bladerdeeg. Bak 12 minuten in het midden van de oven. Haal de bladerdeegtaartjes uit de oven en breek boven elk taartje een ei. Zet daarna de bladerdeegtaartjes 5 minuten terug in de oven totdat het eiwit gestold is en de dooier nog mooi zacht is.\nStap 3 Garneer met de fijngesneden peterselie, zout en peper."
+    }
+  ],
+  "italiaans": [
+    {
+      title: "Kip met mozzarella en gnocchi",
+      prep: 20,
+      cook: 18,
+      ingredients: [
+        "1 ui",
+        "1 teentje knoflook",
+        "1 rode paprika",
+        "1 bol mozzarella",
+        "2 kl Italiaanse kruiden",
+        "500 ml tomaten­passata",
+        "250 g gnocchi",
+        "2 kipfilets",
+        "2 el olijfolie",
+        "peper en zout"
+      ],
+      steps: "Stap 1 Verwarm de oven voor op 200 °C\nStap 2Snij de ui fijn en pers de knoflook. Snij de rode paprika in blokjes. Snij de mozzarella in plakjes.\nStap 3 Verhit de helft van de olijfolie in een antikleefpan en stoof de ui 2 minuten. Voeg de knoflook, Italiaanse kruiden en paprika toe en laat 4 minuten stoven. \nStoep 4 Schep regelmatig om. Voeg de passata toe, kruid met peper en zout en laat 5 minuten pruttelen.\nStap 5 Breng een ruime pot gezouten water aan de kook. Wanneer het water kookt, voeg je de gnocchi toe. Wanneer ze gaar zijn, komen ze bovendrijven, dat duurt maar 2-3 minuten. Giet de gnocchi af en laat uitlekken.\nStap 6 Bestrijk een ovenschaal met de rest van de olijfolie en leg er de kipfilets in. Kruid met peper en zout. Meng de gnocchi door de tomatensaus en schep rond de kipfilets in de ovenschaal. Leg de plakjes mozzarella bovenop de kipfilets.\nStap 7 Zet de ovenschaal 18 minuten in de voorverwarmde oven."
+    }
+  ],
+
+  "overig": [
+    {
+      title: "Kapsalon",
+      prep: 15,
+      cook: 5,
+      ingredients: [
+        "700 gram verse Vlaamse friet",
+        "verse Vlaamse friet",
+        "500 gram shoarmareepjes",
+        "100 gram geraspte Goudse belegen kaas 48+",
+        "½0.5 komkommer",
+        "2 tomaten",
+        "100 gram gesneden ijsbergsla",
+        "100 ml Turkse knoflooksaus"
+      ],
+      steps: "Stap 1 Verwarm de oven voor op 200 °C. Bak de frites in ca. 25 min. in de oven goudbruin.\nStap 2 Verhit ondertussen een koekenpan met antiaanbaklaag en bak de shoarma zonder boter of olie in 8 min. bruin en gaar.\nStap 3 Schep de friet in de ovenschaal en schep de shoarma erop. Verdeel de kaasover de shoarma en zet ca. 5 min. in de oven tot de kaas is gesmolten.\nStap 4 Halveer ondertussen de komkommer in de lengte en snijd in plakjes. Snijd de tomaten in dunne plakken\nStap 5 Neem de schaal uit de oven en verdeel de sla, tomaat en komkommer erover. Besprenkel met de knoflooksaus."
+    }
+  ],
+  "italiaans": [
+    {
+      title: "Tomaten Risotto",
+      prep: 40,
+      cook: 0,
+      ingredients: [
+        "150 gr risottorijst",
+        "1 ui",
+        "1 teen knoflook",
+        "verse basilicum",
+        "2 eetlepels olie",
+        "Scheutje droge witte wijn",
+        "300 ml warme groentebouillon (Maggi)",
+        "250 gr cherrytomaatjes aan tak",
+        "50 gr Parmezaanse kaas",
+        "350 ml Tomato Frito saus of tomatensaus",
+        "1 burrata ( of mozzarella )"
+      ],
+      steps: "Stap 1 Verwarm de oven op 200 graden. Snipper de ui en knoflook. Fruit deze aan in een pan met een eetlepel olie. Voeg de risottorijst toe er bak 3 minuutjes mee.\nStap 2 Blus af met de witte wijn. Wacht tot de wijn is opgenomen. Voeg dan de tomatensaus toe en een soeplepel bouillon en roer af en toe door. Doe ondertussen de cherrytomaatjes in een ovenschaal, besprenkel met een beetje olie en bestrooi met een snufje peper en zout en rooster ze 15 minuutjes in de oven of 10 minuten in de Airfryer.\nStap 3 Als de tomatensaus en de eerste schep bouillon is opgenomen voeg je de volgende lepel bouillon toe. Kook de risotto in totaal ca. 25 minuten maar proef tussendoor of hij al gaar is. Hij moet zacht zijn maar nog een kleine bite van binnen. Het kan zijn dat je iets van de bouillon overhoudt of tekort komt.\nStap 4 Rasp de Parmezaanse kaas en roer door de risotto. Roer op het laatst nog een paar blaadjes basilicum er door. Schep de risotto op borden en verdeel de burrata er over. Leg de geroosterde tomaatjes erbij en garneer met basilicum."
+    }
+  ],
+  "streetfood": [
+    {
+      title: "Riefkoeken",
+      prep: 30,
+      cook: 0,
+      ingredients: [
+        "500 gr aardappel grof geraspt",
+        "1 ui fijngesnipperd",
+        "1 ei",
+        "1 el bloem",
+        "wat versgemalen zout en peper",
+        "snufje nootmuskaat",
+        "boter of olie om in te bakken"
+      ],
+      steps: "Stap 1 Meng de geraspte aardappel met de fijngesnipperde ui, het ei en de bloem goed door elkaar. Breng het geheel op smaak met wat versgemalen zout en peper en nootmuskaat.\nStap 2 Smelt een beetje boter, of verhit de olie, in een ruime koekenpan. Schep drie hoopjes van het aardappelmengsel in de pan en druk ze een wat platter.\nStap 3 Bak de onderkant van de Reibekuchen op middelhoogvuur goudbruin.Draai ze om en bak de andere kant goudbruin. Ga zo door tot het aardappelmengsel op is."
+    }
+  ],
+  "aziatisch": [
+    {
+      title: "Chinese bami",
+      prep: 40,
+      cook: 0,
+      ingredients: [
+        "500 gram mie",
+        "4 bouillonblokjes kip",
+        "250 gram hamblokjes",
+        "1 grote prei in ringen gesneden",
+        "4 eieren",
+        "1 eetlepel sesamolie",
+        "1 eetlepel sojasaus",
+        "3 tenen knoflook",
+        "Mespuntje gemalen gember",
+        "Mespuntje ve-tsin",
+        "1 theelepel Witte peper",
+        "Wokolie"
+      ],
+      steps: "Stap 1 Kook de mie in een ruime hoeveelheid water met alle bouillonblokjes, giet het daarna af en spoel na met koud water, zet dit aan de kant\nStap 2 Doe de eieren in een kommetje en klop deze los, snijd de knoflook fijn\nStap 3 Verhit een flinke scheut wokolie in een wokpan en voeg de knoflook toe, fruit deze eventjes aan en giet vervolgens de eieren in de pan, roerbak tot het gaar is\nStap 4 Voeg dan de gesneden prei en hamblokjes toe en roerbak dit 2 minuten mee\nStap 5 Doe de gekookte mie in de pan en breng op smaak met de gember, witte peper, sojasaus, sesamolie en mespuntje ve-tsin en voeg eventueel nog wat zout toe"
+    }
+  ],
+  "aziatisch": [
+    {
+      title: "Chinese nasi",
+      prep: 30,
+      cook: 10,
+      ingredients: [
+        "400 gram witte rijst",
+        "250 gram hamblokjes",
+        "1 liter kippenbouillon (vers, uit een pot of van een blokje)",
+        "3 tenen knoflook, in plakjes gesneden",
+        "200 gram diepvries doperwten",
+        "1 bosje lente-ui/bosui",
+        "1 eetlepel groentebouillonpoeder",
+        "6 eieren",
+        "½ tot 1 eetlepel sesamolie",
+        "½ eetlepel sojasaus",
+        "zout en peper naar smaak",
+        "50 milliliter olie"
+      ],
+      steps: "Stap 1 Kook de rijst in kippenbouillon zoals aangegeven op de verpakking. Giet af, spreid uit op een bord of dienblad en laat volledig afkoelen.\nStap 2Snijd de knoflook in plakjes en de lente-ui in ringetjes (wit en groen apart).\nVerhit olie in een wok of koekenpan en bak de knoflook op laag vuur tot knoflookolie. Haal de knoflook uit de pan en bewaar apart als topping.\nStap 3 Bak de hamblokjes in dezelfde pan. Voeg het witte gedeelte van de lente-ui toe en bak kort mee. Doe de afgekoelde rijst erbij en schep goed om. Voeg daarna de doperwten toe.\nStap 4 Voeg de groentebouillonpoeder, sesamolie en sojasaus toe en meng goed door. Kluts de eieren en bak ze apart tot roerei.\nStap 5 Voeg het roerei toe aan de rijst en schep goed door. Meng tot slot het groene gedeelte van de lente-ui erdoor. Serveer met de gefrituurde knoflook als topping."
+    }
+  ],
+  "streetfood": [
+    {
+      title: "Dorito kip",
+      prep: 20,
+      cook: 15,
+      ingredients: [
+        "500 gram kipfilet",
+        "1 zak doritos á 185 gram naar smaak",
+        "2 eieren (middel)",
+        "3 eetlepels bloem"
+      ],
+      steps: "Stap 1 Verwarm de oven voor op 200 graden boven- en onderwarmte. Snijd de kipfilet in stukjes. Zet 3 bakjes klaar: één met geklutste eieren, één met bloem en één met verkruimelde Doritos. \nStap 2 Wentel de kipstukjes eerst door de bloem, dan door het ei en tot slot door de Doritos. Gebruik één hand voor nat (kip + ei) en de andere hand voor droog (bloem + Doritos).\nStap 3 Leg de kipnuggets op een met bakpapier beklede bakplaat. Herhaal dit tot alle stukjes kip zijn bedekt en klaarliggen.\nStap 4 Bak de nuggets 15–20 minuten in de oven. Controleer of de kip goed gaar is door een stukje open te snijden. Serveer met een sausje naar smaak."
+    }
+  ],
+  "italiaans": [
+    {
+      title: "Penne met pesto zongedroogde tomaat en rucola",
+      prep: 15,
+      cook: 10,
+      ingredients: [
+        "300 gram penne",
+        "295 gram zongedroogde tomaten in pot",
+        "150 gram rucola",
+        "125 gram koelverse pestosaus verde"
+      ],
+      steps: "Stap 1 Kook de pasta volgens de aanwijzingen op de verpakking. Snijd ondertussen de zongedroogde tomaten in reepjes. Giet de pasta af, laat uitlekken en meng met de tomatenreepjes en 3 eetlepels olie uit de pot.\nStap 2 Schep de pestosaus door de pasta en breng op smaak met peper en eventueel zout. Verdeel de rucola en de pasta over de borden."
+    }
+  ],
 
   
 }; // { [tab]: [{ title, prep, cook, ingredients[], steps }] }
