@@ -409,6 +409,53 @@ let recipes = {
       steps: "Stap 1 Kook de pasta volgens de aanwijzingen op de verpakking. Snijd ondertussen de zongedroogde tomaten in reepjes. Giet de pasta af, laat uitlekken en meng met de tomatenreepjes en 3 eetlepels olie uit de pot.\nStap 2 Schep de pestosaus door de pasta en breng op smaak met peper en eventueel zout. Verdeel de rucola en de pasta over de borden."
     }
   ],
+  "aziatisch": [
+    {
+      title: "Koe loe yuk",
+      prep: 30,
+      cook: 10,
+      ingredients: [
+        "500 g varkensvlees (procureur of schouder), in blokjes van ca. 3 cm",
+        "1 ei",
+        "2 el sojasaus",
+        "1 el rijstwijn of sherry (optioneel)",
+        "½ tl zout",
+        "½ tl peper",
+        "100 g maizena",
+        "3 el zonnebloemolie (voor in de oven, of meer als je in de pan bakt)",
+        "3 el ketchup",
+        "2 el rijstazijn (of gewone azijn)",
+        "2 el suiker",
+        "1 el sojasaus",
+        "100 ml water of bouillon",
+        "1 el maizena + 2 el water (om te binden)"
+      ],
+      steps: "Stap 1 Meng het ei, sojasaus, rijstwijn, zout en peper in een kom. Voeg de varkensblokjes toe en laat 20 minuten marineren.Wentel de blokjes door de maizena tot ze goed bedekt zijn.\nStap 2 Verwarm de oven voor op 200°C (boven- en onderwarmte).Leg de vleesblokjes op een bakplaat met bakpapier.Besprenkel of bestrijk licht met olie.Bak 20–25 minuten goudbruin, halverwege omdraaien.\nStap 3 Meng ketchup, azijn, suiker, sojasaus en water in een kommetje.Verhit een klein beetje olie in een wok, bak de paprika en ui kort (optioneel). Voeg ananasstukjes toe.Giet de saus erbij en breng zachtjes aan de kook.Roer het maizena-papje erdoor tot de saus mooi dik wordt.\nStap 4 voeg dit allemaal samen en tast toe"
+    }
+  ],
+  "mexiaans": [
+    {
+      title: "Nachos",
+      prep: 15,
+      cook: 20,
+      ingredients: [
+        "1 zak tortillachips (naturel of cheese)",
+        "300 g rundergehakt",
+        "1 ui, fijngesnipperd",
+        "2 tenen knoflook, fijngehakt",
+        "1 rode paprika, in blokjes",
+        "1 groene peper (jalapeño of andere), in ringetjes",
+        "1 blik tomatenblokjes (400 g) of 200 ml tomatensaus",
+        "2 tl paprikapoeder",
+        "1 tl komijnpoeder",
+        "½ tl chilipoeder (meer naar smaak)",
+        "Zout en peper",
+        "150 g geraspte kaas (cheddar of jong belegen)",
+        "1 el olie"
+      ],
+      steps: "Stap 1 Bak het gehakt met de ui, knoflook, groene peper en tomaten kort aan in een pan. Voeg de kruiden toe en roer goed door.\nStap 2 Leg de nacho’s in een ovenschaal, verdeel het gehaktmengsel erover en bestrooi met geraspte kaas. Bak 20–25 minuten in de oven op 190°C. Maak af met zure room, guacamole, verse koriander en rode peper."
+    }
+  ],
 
   
 }; // { [tab]: [{ title, prep, cook, ingredients[], steps }] }
