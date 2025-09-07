@@ -140,11 +140,9 @@
 </head>
 <body>
   <header>
-    <h1>Kookboek</h1>
+      <h1 onclick="resetApp()">Kookboek</h1>
 
-    <button onclick="resetApp()" style="position: fixed; bottom: 10px; right: 10px; padding: 10px; background-color: red; color: white; border: none; border-radius: 5px; cursor: pointer;">
-  Reset Applicatie
-</button>
+    
     <div class="spacer"></div>
     <div class="tools">
       <input id="search" class="input" placeholder="Zoek recept op titel…" />
@@ -207,5 +205,13 @@
   </dialog>
 
   <script src="kookboek.js"></script>
+   <script>
+    function resetApp() {
+      // Verwijder de opgeslagen data in localStorage
+      localStorage.removeItem("kookboek_tabs_v5");
+      // Herlaad de pagina
+      location.reload();
+    }
+  </script>
 </body>
 </html>
