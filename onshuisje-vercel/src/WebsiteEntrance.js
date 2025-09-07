@@ -4,7 +4,7 @@ const STORAGE_KEY = "kookboek_tabs_v5";
 const DEFAULT_TABS = [
   "Pastas","soepen","bakken","schotels","overig","italiaans","hollandse pot",
   "smoothies","cocktails","aziatisch","korte bereiding","mexiaans",
-  "gezonde recepten","toetjes","streetfood",
+  "gezonde recepten","toetjes","streetfood","sauzen",
 ];
 
 let tabs = [];
