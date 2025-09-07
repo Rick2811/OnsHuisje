@@ -101,6 +101,96 @@ let recipes = {
       steps: "Stap 1 snipper de uien hak de knoflook fijn en snijd de paprika,s in blokjes smelt de boter in een pan en bak daarin de uitjes knoflook en paprika 3 minuten.\nStap 2 voeg het vlees toe en bak dit mee voor 3 minuten voeg vervolgens het paprikapoeder, het bloem en de tomatenpuree toe en bak dit nog voor 1 minuut mee.\nStap 3 Voeg de gepelde tomaten, 1 liter water en het bouillonblokje toe\nStap 4 Schil de aardappelen en snijd ze in blokjes en voeg ze de laatste 15 minuten toe"
     }
   ],
+  "Pastas": [
+    {
+      title: "Mac and cheese",
+      prep: 20,
+      cook: 20,
+      ingredients: [
+        "300 gram macaroni",
+        "70 gram boter",
+        "40 gram bloem",
+        "500 ml melk",
+        "150 gram oude kaas",
+        "150 gram jonge kaas",
+        "250 gram hamblokjes",
+        "parneermeel"
+      ],
+      steps: "Stap 1 verwarm de oven voor op 200 graden en kook de macaroni maar haal er 2 minutne af zodat het net nog niet gaar is\nStap 2 verhit de boter in een steelpan en voeg de bloem toe voeg geleidelijk melk toe en roer met garde tot een romige saus voeg vervolgens 100 gram jong en oude kaas toe en blijf roeren tot het gesmolten is \nStap 3 meng de kaassaus met hamblokjes en meng dit door de macaroni heen en schep het in een ovenschaal\nStap 4 bestrooi met paneermeel en bak dit in de oven voor circa 20 minuten"
+    }
+  ],
+  "overig": [
+    {
+      title: "Croque monsieur met bechemelsaus",
+      prep: 25,
+      cook: 5,
+      ingredients: [
+        "4 dikke sneeen brood",
+        "1 el smeerbare roomboter ongezouten",
+        "4 plakken jonge kaas",
+        "2 plakken ham",
+        "50 gram geraspte jonge kaas",
+        "40 gram roomboter ongezouten",
+        "40 gram bloem",
+        "500 milliliter volle melk",
+        "nootmuskaat"
+      ],
+      steps: "Stap 1 Smelt voor de bechamelsaus de roomboter op een lage stand in een (steel)pan. Roer de bloem met een garde erdoorheen en laat 1 minuut al roerend garen. Voeg al roerend beetje bij beetje de melk toe. Voeg pas weer melk toe als de vorige portie is opgenomen.\nStap 2 Laat de saus 3-5 minuten koken op een lage stand en roer af en toe over de bodem om aanbranden te voorkomen. Breng op smaak met zout, peper en nootmuskaat en laat afkoelen.\nStap 3 Besmeer 2 boterhammen aan een kant met boter. Keer ze om zodat ze met de boterkant naar beneden liggen en beleg elke boterham met 1 plak kaas, een beetje mosterd, 1 plak ham en nog 1 plak kaas. Leg de overige boterhammen erbovenop en besmeer deze ook met boter. Verwarm de ovengrill voor.\nStap 4 Verhit een koekenpan en leg de broodstapeltjes erin. Bak de tosti's op een lage stand om en om goudbruin, tot de kaas gesmolten is.\nStap 5 Leg de tosti's op de bakplaat en bestrijk met een paar lepels bechamelsaus. Bestrooi met de geraspte kaas en gratineer onder de ovengrill. Serveer direct. Lekker met een groene salade."
+    }
+  ],
+  "Pastas": [
+    {
+      title: "Carbonara",
+      prep: 20,
+      cook: 5,
+      ingredients: [
+        "400 gram spaghetti",
+        "125 ml verse slagroom",
+        "2 middelgrote eieren",
+        "75 gram Parmezaanse kaas",
+        "4 takjes verse platte peterselie",
+        "200 gram spekreepjes",
+        "2 tenen knoflook"
+      ],
+      steps: "Stap 1 Kook de spaghetti volgens de aanwijzingen op de verpakking beetgaar. Doe ondertussen de slagroom in een kom, breek de eieren erboven en klop met een vork door elkaar. Rasp de kaas erboven en meng erdoor. Snijd de peterselie fijn.\nStap 2 Verhit een koekenpan zonder olie of boter op middelhoog vuur en bak de spekreepjes in 5 min. uit. Snijd ondertussen de knoflook fijn en bak de laatste 30 sec. met de spekjes mee. Schep de spekjes uit de pan en laat uitlekken op keukenpapier.\nStap 3 Voeg al roerend het slagroommengsel toe. Blijf roeren tot de kaas gesmolten is en de saus iets is ingedikt. Voeg eventueel wat kookvocht toe om de pasta smeuïger te maken. Schep de spaghetti carbonara vlug in een schaal, zodat de restwarmte van de pan het ei in de saus niet verder laat stollen. Bestrooi met de peterselie en (versgemalen) zwarte peper. Serveer direct."
+    }
+  ],
+  "korte bereiding": [
+    {
+      title: "Wraps met kippenragout en rucola",
+      prep: 15,
+      cook: 0,
+      ingredients: [
+        "1 blik kipragout",
+        "8 kleine wraps",
+        "3 el creme fraiche",
+        "1 zak rucola",
+        "4 cocktail prikkers"
+      ],
+      steps: "Stap 1 verwarm de kipragout en verwarm de wraps voor 1 minuut in de magnetron op 600 watt \nStap 2 besmeer de wraps met creme fraiche verdeel de rucola over de wraps\nStap 3 Voeg de ragout toe en sluit de wrap en doe er een sateprikker in"
+    }
+  ],"mexiaans": [
+  {
+    title: "Nachos met gehakt, paprika, pepertjes en kaas",
+    prep: 10,
+    cook: 15,
+    ingredients: [
+      "250g rundergehakt",
+      "1 rode paprika",
+      "1 groene paprika",
+      "1 rode peper (of jalapeño)",
+      "1 zak tortillachips (nacho's)",
+      "150g geraspte kaas (cheddar of jong belegen)",
+      "125ml zure room",
+      "1 el olijfolie",
+      "1 tl paprikapoeder",
+      "1/2 tl gemalen komijn",
+      "Zout en peper"
+    ],
+    steps: "Stap 1: Verwarm de oven voor op 200°C.\nStap 2: Verhit de olie en bak het gehakt rul met paprikapoeder, komijn, zout en peper.\nStap 3: Snijd de paprika's en peper; bak 3–4 minuten mee met het gehakt.\nStap 4: Verdeel de nacho's over een ovenschaal en schep het gehaktmengsel erover.\nStap 5: Bestrooi royaal met de geraspte kaas.\nStap 6: Bak 8–10 minuten tot de kaas gesmolten en licht goudbruin is.\nStap 7: Haal uit de oven en serveer met toefjes zure room (en extra peperringetjes naar smaak)."
+  }
+],
+
   
 }; // { [tab]: [{ title, prep, cook, ingredients[], steps }] }
 
