@@ -152,6 +152,12 @@ function render() {
   }
 }
 
+function resetApp() {
+  localStorage.removeItem("kookboek_tabs_v5"); // Verwijder de opgeslagen data
+  // eslint-disable-next-line no-restricted-globals
+  location.reload(); // Herlaad de pagina om opnieuw te initialiseren
+}
+
 function renderRecipes() {
   if (!$recipeList || !active) return;
   $recipeList.innerHTML = "";
