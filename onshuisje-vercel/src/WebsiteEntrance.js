@@ -456,6 +456,23 @@ let recipes = {
       steps: "Stap 1 Bak het gehakt met de ui, knoflook, groene peper en tomaten kort aan in een pan. Voeg de kruiden toe en roer goed door.\nStap 2 Leg de nacho’s in een ovenschaal, verdeel het gehaktmengsel erover en bestrooi met geraspte kaas. Bak 20–25 minuten in de oven op 190°C. Maak af met zure room, guacamole, verse koriander en rode peper."
     }
   ],
+  "sauzen": [
+    {
+      title: "Zoetzure saus",
+      prep: 15,
+      cook: 0,
+      ingredients: [
+        "150 ml water",
+        "3 el azijn (liefst rijstazijn, anders gewone natuurazijn)",
+        "3 el kristalsuiker",
+        "3 el ketchup",
+        "1 el sojasaus",
+        "1 el maizena + 2 el water (om te binden)",
+        "Optioneel: ½ rode peper (fijngehakt) of een paar stukjes ananas voor extra smaak"
+      ],
+      steps: "Stap 1 Doe het water, azijn, suiker, ketchup en sojasaus in een pannetje. Breng dit aan de kook en roer tot de suiker is opgelost.\nStap 2 Roer het maizena-papje (maizena + water) door de saus en laat nog 1–2 minuten zachtjes koken tot de saus mooi indikt.\nStap 3 Proef: wil je het zoeter → extra suiker, zuurder → extra azijn, pittiger → rode peper toevoegen.\nStap 4 Laat iets afkoelen en serveer lauwwarm of koud bij loempia’s"
+    }
+  ],
 
   
 }; // { [tab]: [{ title, prep, cook, ingredients[], steps }] }
