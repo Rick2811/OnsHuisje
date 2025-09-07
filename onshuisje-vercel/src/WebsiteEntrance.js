@@ -63,7 +63,45 @@ let recipes = {
       ],
       steps: "Stap 1 ui snipperen en in pan knoflook uit persen\nStap 2 gehakt bakken met de ui en kruiden toe ook peper en zout\nStap 3 voeg de kippenbouillon de tomaten saus en tomaten puree toe \nStap 4 breek de lasagne bladen in stukken en doe die er door heen \nStap 5 voeg de becemel saus toe en kaas en sluit de pan af"
     }
-  ]
+  ],
+"sauzen": [
+    {
+      title: "Peper saus voor 3 personen",
+      prep: 10,
+      cook: 30,
+      ingredients: [
+        "5 Tenen knoflook",
+        "peperkorrels",
+        "scheutje witte wijn",
+        "twee kookroom",
+        "rundvlees bouillon",
+        "bloem"
+      ],
+      steps: "stap 1 snij 1 teentje knoflook pers de overige 4\nstap 2 voeg vervolgens alle ingredienten samen \nstap 3 proef en roer goed ook de onderkant\nstap 4 voeg op gevoel nog extra ingredienten toe"
+    }
+  ],
+  "soepen": [
+    {
+      title: "Goulash soep",
+      prep: 30,
+      cook: 10,
+      ingredients: [
+        "2 uien",
+        "3 tenen knoflook",
+        "1 rode paprika",
+        "1 gele paprika",
+        "1 runder bouillon blokje",
+        "1 blik gepelde tomaten",
+        "2 vastkokende aardappelen",
+        "2 potten vlees bouillon",
+        "1 blikje tomatenpuree 70 gram",
+        "1 el paprikapoeder",
+        "3 el bloem"
+      ],
+      steps: "Stap 1 snipper de uien hak de knoflook fijn en snijd de paprika,s in blokjes smelt de boter in een pan en bak daarin de uitjes knoflook en paprika 3 minuten.\nStap 2 voeg het vlees toe en bak dit mee voor 3 minuten voeg vervolgens het paprikapoeder, het bloem en de tomatenpuree toe en bak dit nog voor 1 minuut mee.\nStap 3 Voeg de gepelde tomaten, 1 liter water en het bouillonblokje toe\nStap 4 Schil de aardappelen en snijd ze in blokjes en voeg ze de laatste 15 minuten toe"
+    }
+  ],
+  
 }; // { [tab]: [{ title, prep, cook, ingredients[], steps }] }
 
 const $list = document.getElementById("tabList");
