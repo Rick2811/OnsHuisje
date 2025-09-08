@@ -661,6 +661,7 @@ function showRecipePage(rec, tabName) {
   overlay.style.alignItems = "stretch";
   overlay.style.justifyContent = "center";
   overlay.style.zIndex = "10000";
+  overlay.style.overflowY = "auto";
 
   // page
   const page = document.createElement("article");
@@ -668,12 +669,19 @@ function showRecipePage(rec, tabName) {
   page.style.color = "white";
   page.style.width = "min(1000px, 96vw)";
   page.style.margin = "2vh 0";
+  page.style.overflowY = "auto";  
+  page.style.maxHeight = "96vh";
   page.style.borderRadius = "14px";
-  page.style.overflow = "hidden";
+  // page.style.overflow = "hidden";
   page.style.display = "flex";
   page.style.flexDirection = "column";
   page.style.border = "1px solid rgba(255,255,255,0.12)";
   page.style.boxShadow = "0 20px 60px rgba(0,0,0,0.45)";
+// Zorg dat kaarten zelf niet knippen
+ingCard.style.maxHeight = "none";
+ingCard.style.overflow = "visible";
+stepsCard.style.maxHeight = "none";
+stepsCard.style.overflow = "visible";
 
   // header
   const header = document.createElement("header");
