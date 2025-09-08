@@ -678,9 +678,9 @@ function showRecipePage(rec, tabName) {
   page.style.border = "1px solid rgba(255,255,255,0.12)";
   page.style.boxShadow = "0 20px 60px rgba(0,0,0,0.45)";
 // Zorg dat kaarten zelf niet knippen
-ingCard.style.maxHeight = "none";
+ingCard.style.maxHeight = "";
 ingCard.style.overflow = "visible";
-stepsCard.style.maxHeight = "none";
+stepsCard.style.maxHeight = "";
 stepsCard.style.overflow = "visible";
 
   // header
