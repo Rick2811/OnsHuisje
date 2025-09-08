@@ -661,7 +661,7 @@ function showRecipePage(rec, tabName) {
   overlay.style.alignItems = "stretch";
   overlay.style.justifyContent = "center";
   overlay.style.zIndex = "10000";
-  overlay.style.overflowY = "auto";
+  overlay.style.overflowY = "auto"; // scrollen toegestaan
 
   // page
   const page = document.createElement("article");
@@ -669,21 +669,15 @@ function showRecipePage(rec, tabName) {
   page.style.color = "white";
   page.style.width = "min(1000px, 96vw)";
   page.style.margin = "2vh 0";
-  page.style.overflowY = "auto";  
-  page.style.maxHeight = "96vh";
   page.style.borderRadius = "14px";
-  // page.style.overflow = "hidden";
+  page.style.maxHeight = "96vh";
+  page.style.overflowY = "auto";
   page.style.display = "flex";
   page.style.flexDirection = "column";
   page.style.border = "1px solid rgba(255,255,255,0.12)";
   page.style.boxShadow = "0 20px 60px rgba(0,0,0,0.45)";
-// Zorg dat kaarten zelf niet knippen
-ingCard.style.maxHeight = "";
-ingCard.style.overflow = "visible";
-stepsCard.style.maxHeight = "";
-stepsCard.style.overflow = "visible";
 
-  // header
+  // —— header (alles gedeclareerd vóór gebruik)
   const header = document.createElement("header");
   header.style.display = "flex";
   header.style.alignItems = "center";
@@ -703,23 +697,23 @@ stepsCard.style.overflow = "visible";
   `;
 
   const headerBtns = document.createElement("div");
-  headerBtns.style.display = "flex"; 
+  headerBtns.style.display = "flex";
   headerBtns.style.gap = "8px";
 
   const backBtn = document.createElement("button");
   backBtn.className = "btn";
   backBtn.textContent = "← Terug";
-  backBtn.onclick = () => document.body.removeChild(overlay);
+  backBtn.onclick = closeOverlay;
 
   const printBtn = document.createElement("button");
   printBtn.className = "btn";
   printBtn.textContent = "Print";
-  printBtn.onclick = () => printRecipe(rec, tabName);
+  printBtn.onclick = function () { printRecipe(rec, tabName); };
 
   headerBtns.append(backBtn, printBtn);
   header.append(titleBox, headerBtns);
 
-  // content
+  // —— content
   const content = document.createElement("div");
   content.style.padding = "18px 16px 22px 16px";
   content.style.display = "grid";
@@ -733,22 +727,19 @@ stepsCard.style.overflow = "visible";
   ingCard.style.border = "1px solid rgba(255,255,255,0.06)";
   ingCard.style.padding = "12px 14px";
   ingCard.style.borderRadius = "12px";
+  ingCard.style.maxHeight = "";      // geen knippen
+  ingCard.style.overflow = "visible";
   ingCard.innerHTML = `<h3 style="margin:0 0 8px 0">Ingrediënten</h3>`;
 
   const ul = document.createElement("ul");
   ul.style.margin = "0"; ul.style.paddingLeft = "18px";
-  (rec.ingredients || []).forEach(i => {
+  (rec.ingredients || []).forEach(function (i) {
     const li = document.createElement("li");
     li.style.margin = "4px 0";
     li.textContent = i;
     ul.appendChild(li);
   });
-  if (!ul.children.length) {
-    const p = document.createElement("p"); p.textContent = "—";
-    ingCard.appendChild(p);
-  } else {
-    ingCard.appendChild(ul);
-  }
+  if (ul.children.length) ingCard.appendChild(ul); else ingCard.appendChild(document.createTextNode("—"));
 
   // stappen
   const stepsCard = document.createElement("section");
@@ -757,41 +748,46 @@ stepsCard.style.overflow = "visible";
   stepsCard.style.border = "1px solid rgba(255,255,255,0.06)";
   stepsCard.style.padding = "12px 14px";
   stepsCard.style.borderRadius = "12px";
+  stepsCard.style.maxHeight = "";    // geen knippen
+  stepsCard.style.overflow = "visible";
   stepsCard.innerHTML = `<h3 style="margin:0 0 8px 0">Bereiding</h3>`;
 
   const steps = document.createElement("div");
-  steps.style.whiteSpace = "pre-wrap";
+  steps.style.whiteSpace = "pre-wrap";  // laat alle regels zien
   steps.style.lineHeight = "1.5";
   steps.textContent = rec.steps || "—";
   stepsCard.appendChild(steps);
 
   content.append(ingCard, stepsCard);
 
-  // footer hint
   const foot = document.createElement("div");
   foot.className = "muted";
   foot.style.opacity = ".75";
   foot.style.fontSize = "12px";
   foot.style.padding = "0 16px 16px";
-  foot.textContent = "Tip: gebruik de Print-knop of druk Ctrl/Cmd+P.";
+  foot.textContent = "Tip: gebruik de Print-knop of Ctrl/Cmd+P.";
 
   page.append(header, content, foot);
   overlay.appendChild(page);
 
-  // sluiten door klik naast de kaart of Escape
-  overlay.addEventListener("click", (e) => {
-    if (e.target === overlay) document.body.removeChild(overlay);
+  // sluiten
+  overlay.addEventListener("click", function (e) {
+    if (e.target === overlay) closeOverlay();
   });
   document.addEventListener("keydown", escToClose);
-  function escToClose(ev){
-    if (ev.key === "Escape") {
-      document.removeEventListener("keydown", escToClose);
-      if (document.body.contains(overlay)) document.body.removeChild(overlay);
-    }
-  }
 
   document.body.appendChild(overlay);
+
+  // ------ helpers binnen de scope (function declarations = veilig/hoisted)
+  function escToClose(ev) {
+    if (ev.key === "Escape") closeOverlay();
+  }
+  function closeOverlay() {
+    document.removeEventListener("keydown", escToClose);
+    if (document.body.contains(overlay)) document.body.removeChild(overlay);
+  }
 }
+
 
 // Print helper
 function printRecipe(rec, tabName) {
