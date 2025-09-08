@@ -387,6 +387,7 @@ function resetApp() {
   location.reload(); // Herlaad de pagina om opnieuw te initialiseren
 }
 
+// --- REPLACE renderRecipes() ---
 function renderRecipes() {
   if (!$recipeList || !active) return;
   $recipeList.innerHTML = "";
@@ -398,14 +399,21 @@ function renderRecipes() {
     $recipeList.appendChild(li); return;
   }
 
-  list.forEach((rec, idx) => $recipeList.appendChild(recipeCard(rec, () => {
-    // verwijderen zonder confirm
-    recipes[active].splice(idx, 1);
-    save(); renderRecipes();
-  })));
+  list.forEach((rec, idx) => $recipeList.appendChild(
+    recipeCard(
+      rec,
+      () => { // verwijderen zonder confirm
+        recipes[active].splice(idx, 1);
+        save(); renderRecipes();
+      },
+      null,
+      () => showRecipePage(rec, active) // <<— NIEUW: openen als volledige pagina
+    )
+  ));
 }
 
-// Alleen op titel zoeken
+
+// --- REPLACE renderSearchResults(q) ---
 function renderSearchResults(q) {
   $recipeList.innerHTML = "";
   const results = [];
@@ -425,15 +433,25 @@ function renderSearchResults(q) {
   }
 
   results.forEach(({ tab, rec }) => {
-    const card = recipeCard(rec, null, tab); // tonen met tablabel
-    card.style.cursor = "pointer";
-    card.onclick = () => { setActive(tab); $search.value = ""; }; // naar tab springen
+    const card = recipeCard(
+      rec,
+      null,
+      tab,
+      () => { setActive(tab); $search.value = ""; showRecipePage(rec, tab); } // <<— open pagina
+    );
     $recipeList.appendChild(card);
   });
 }
 
-function recipeCard(rec, onDelete, tabLabel) {
-  const li = document.createElement("li"); li.className = "card";
+
+// --- REPLACE recipeCard(rec, onDelete, tabLabel) ---
+function recipeCard(rec, onDelete, tabLabel, onOpen) {
+  const li = document.createElement("li"); 
+  li.className = "card";
+  if (onOpen) {
+    li.style.cursor = "pointer";
+    li.onclick = () => onOpen(rec);
+  }
 
   const head = document.createElement("div"); head.className = "card-head";
   const left = document.createElement("div");
@@ -446,7 +464,7 @@ function recipeCard(rec, onDelete, tabLabel) {
   const right = document.createElement("div");
   if (onDelete) {
     const del = mkSmallBtn("×", "Verwijder recept");
-    del.onclick = (e) => { e.stopPropagation(); onDelete(); };
+    del.onclick = (e) => { e.stopPropagation(); onDelete(); }; // belangrijk: voorkomt openen
     right.appendChild(del);
   }
   head.append(left, right);
@@ -631,6 +649,184 @@ function showSnippetPopup(snippetText) {
 
   document.body.appendChild(overlay);
 }
+
+// ============ NIEUW: VOLLEDIGE PAGINA VOOR 1 RECEPT ============
+function showRecipePage(rec, tabName) {
+  // overlay
+  const overlay = document.createElement("div");
+  overlay.style.position = "fixed";
+  overlay.style.inset = "0";
+  overlay.style.background = "rgba(0,0,0,0.7)";
+  overlay.style.display = "flex";
+  overlay.style.alignItems = "stretch";
+  overlay.style.justifyContent = "center";
+  overlay.style.zIndex = "10000";
+
+  // page
+  const page = document.createElement("article");
+  page.style.background = "#0f1318";
+  page.style.color = "white";
+  page.style.width = "min(1000px, 96vw)";
+  page.style.margin = "2vh 0";
+  page.style.borderRadius = "14px";
+  page.style.overflow = "hidden";
+  page.style.display = "flex";
+  page.style.flexDirection = "column";
+  page.style.border = "1px solid rgba(255,255,255,0.12)";
+  page.style.boxShadow = "0 20px 60px rgba(0,0,0,0.45)";
+
+  // header
+  const header = document.createElement("header");
+  header.style.display = "flex";
+  header.style.alignItems = "center";
+  header.style.justifyContent = "space-between";
+  header.style.gap = "8px";
+  header.style.padding = "14px 16px";
+  header.style.borderBottom = "1px solid rgba(255,255,255,0.08)";
+
+  const titleBox = document.createElement("div");
+  titleBox.innerHTML = `
+    <div class="muted" style="font-size:12px;opacity:.8">${escapeHtml(tabName || "")}</div>
+    <h2 style="margin:.15rem 0 0 0">${escapeHtml(rec.title || "Recept")}</h2>
+    <div style="margin-top:.35rem">
+      <span class="chip">${(rec.prep||0)} min prep</span>
+      <span class="chip" style="margin-left:.35rem">${(rec.cook||0)} min koken</span>
+    </div>
+  `;
+
+  const headerBtns = document.createElement("div");
+  headerBtns.style.display = "flex"; 
+  headerBtns.style.gap = "8px";
+
+  const backBtn = document.createElement("button");
+  backBtn.className = "btn";
+  backBtn.textContent = "← Terug";
+  backBtn.onclick = () => document.body.removeChild(overlay);
+
+  const printBtn = document.createElement("button");
+  printBtn.className = "btn";
+  printBtn.textContent = "Print";
+  printBtn.onclick = () => printRecipe(rec, tabName);
+
+  headerBtns.append(backBtn, printBtn);
+  header.append(titleBox, headerBtns);
+
+  // content
+  const content = document.createElement("div");
+  content.style.padding = "18px 16px 22px 16px";
+  content.style.display = "grid";
+  content.style.gridTemplateColumns = "1fr";
+  content.style.gap = "16px";
+
+  // ingrediënten
+  const ingCard = document.createElement("section");
+  ingCard.className = "card";
+  ingCard.style.background = "rgba(255,255,255,0.03)";
+  ingCard.style.border = "1px solid rgba(255,255,255,0.06)";
+  ingCard.style.padding = "12px 14px";
+  ingCard.style.borderRadius = "12px";
+  ingCard.innerHTML = `<h3 style="margin:0 0 8px 0">Ingrediënten</h3>`;
+
+  const ul = document.createElement("ul");
+  ul.style.margin = "0"; ul.style.paddingLeft = "18px";
+  (rec.ingredients || []).forEach(i => {
+    const li = document.createElement("li");
+    li.style.margin = "4px 0";
+    li.textContent = i;
+    ul.appendChild(li);
+  });
+  if (!ul.children.length) {
+    const p = document.createElement("p"); p.textContent = "—";
+    ingCard.appendChild(p);
+  } else {
+    ingCard.appendChild(ul);
+  }
+
+  // stappen
+  const stepsCard = document.createElement("section");
+  stepsCard.className = "card";
+  stepsCard.style.background = "rgba(255,255,255,0.03)";
+  stepsCard.style.border = "1px solid rgba(255,255,255,0.06)";
+  stepsCard.style.padding = "12px 14px";
+  stepsCard.style.borderRadius = "12px";
+  stepsCard.innerHTML = `<h3 style="margin:0 0 8px 0">Bereiding</h3>`;
+
+  const steps = document.createElement("div");
+  steps.style.whiteSpace = "pre-wrap";
+  steps.style.lineHeight = "1.5";
+  steps.textContent = rec.steps || "—";
+  stepsCard.appendChild(steps);
+
+  content.append(ingCard, stepsCard);
+
+  // footer hint
+  const foot = document.createElement("div");
+  foot.className = "muted";
+  foot.style.opacity = ".75";
+  foot.style.fontSize = "12px";
+  foot.style.padding = "0 16px 16px";
+  foot.textContent = "Tip: gebruik de Print-knop of druk Ctrl/Cmd+P.";
+
+  page.append(header, content, foot);
+  overlay.appendChild(page);
+
+  // sluiten door klik naast de kaart of Escape
+  overlay.addEventListener("click", (e) => {
+    if (e.target === overlay) document.body.removeChild(overlay);
+  });
+  document.addEventListener("keydown", escToClose);
+  function escToClose(ev){
+    if (ev.key === "Escape") {
+      document.removeEventListener("keydown", escToClose);
+      if (document.body.contains(overlay)) document.body.removeChild(overlay);
+    }
+  }
+
+  document.body.appendChild(overlay);
+}
+
+// Print helper
+function printRecipe(rec, tabName) {
+  const w = window.open("", "_blank");
+  const esc = (s)=>String(s||"").replace(/[&<>"']/g,m=>({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;" }[m]));
+  const ingredients = (rec.ingredients||[]).map(i=>`<li>${esc(i)}</li>`).join("");
+  w.document.write(`
+    <html>
+      <head>
+        <meta charset="utf-8">
+        <title>${esc(rec.title||"Recept")}</title>
+        <style>
+          body { font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; margin: 24px; color:#111 }
+          h1 { margin: 0 0 6px 0; }
+          .muted { color:#555; font-size:13px; margin-bottom:12px }
+          .meta { margin:8px 0 16px; }
+          .chip { display:inline-block; border:1px solid #ccc; border-radius:999px; padding:2px 8px; font-size:12px; margin-right:6px }
+          h2 { margin:18px 0 8px }
+          ul { margin:0 0 12px 18px }
+          pre { white-space: pre-wrap; }
+          @media print { @page { margin: 16mm } }
+        </style>
+      </head>
+      <body>
+        <div class="muted">${esc(tabName||"")}</div>
+        <h1>${esc(rec.title||"Recept")}</h1>
+        <div class="meta">
+          <span class="chip">${rec.prep||0} min prep</span>
+          <span class="chip">${rec.cook||0} min koken</span>
+        </div>
+        <h2>Ingrediënten</h2>
+        ${ingredients ? `<ul>${ingredients}</ul>` : "<p>—</p>"}
+        <h2>Bereiding</h2>
+        <pre>${esc(rec.steps||"—")}</pre>
+        <script>window.onload = () => window.print();<\/script>
+      </body>
+    </html>
+  `);
+  w.document.close();
+}
+// ========== EINDE: VOLLEDIGE RECEPTPAGINA ===========
+
+
 // === EINDE NIEUW ===
 
 // Events
