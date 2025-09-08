@@ -473,6 +473,24 @@ let recipes = {
       steps: "Stap 1 Doe het water, azijn, suiker, ketchup en sojasaus in een pannetje. Breng dit aan de kook en roer tot de suiker is opgelost.\nStap 2 Roer het maizena-papje (maizena + water) door de saus en laat nog 1–2 minuten zachtjes koken tot de saus mooi indikt.\nStap 3 Proef: wil je het zoeter → extra suiker, zuurder → extra azijn, pittiger → rode peper toevoegen.\nStap 4 Laat iets afkoelen en serveer lauwwarm of koud bij loempia’s"
     }
   ],
+  "soepen": [
+    {
+      title: "Chinese tomatensoep",
+      prep: 30,
+      cook: 0,
+      ingredients: [
+        "2 liter water",
+        "2 pakjes tomaten frito",
+        "1 potje kippenbouillon of verse kip/kippenreepjes",
+        "4 eetlepels gembersiroop",
+        "1 scheutje sojasaus",
+        "1 mespuntje cayenne poeder",
+        "2 eetlepels bruine bastard suiker",
+        "25 gram vermicelli"
+      ],
+      steps: "Stap 1 Kip in stukjes snijden en in bouillon doen \nStap 2 tomaten frito in een pan doen bij de bouillon voegen en kip\nStap 3 vervolgens voeg je alles samen en voeg je alle extra spullen en vermicelli toe"
+    }
+  ],
 
   
 }; // { [tab]: [{ title, prep, cook, ingredients[], steps }] }
