@@ -144,23 +144,21 @@
     <h1 onclick="redirectToRosanster()">Maintenance</h1>
     <script type="module">
       async function redirectToRosanster() {
-        // Leeg de hele body en maak een zwarte container
         document.body.innerHTML = `
-      <div id="rosansterApp" style="background:black; color:white; height:100vh; width:100vw; padding:2rem; box-sizing:border-box;">
+      <div id="rosansterApp" style="background:black; color:white; height:100vh; width:100vw; padding:2rem;">
         <p style="font-size:1rem;">Spel wordt geladen...</p>
       </div>
     `;
 
-        // Laad Rosanster module en voer functie uit
         try {
-          const module = await import('./Rosanster/Rosanster.js');
+          const module = await import('./src/Rosanster/Rosanster.js');
           if (typeof module.initGame === 'function') {
-            module.initGame(); // jouw startpunt
+            module.initGame();
           } else {
-            console.error("initGame() niet gevonden in Rosanster.js");
+            console.error("initGame() niet gevonden");
           }
         } catch (err) {
-          console.error("Fout bij laden Rosanster.js", err);
+          console.error("Fout bij importeren van Rosanster.js", err);
         }
       }
 
