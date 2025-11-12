@@ -144,9 +144,26 @@
     <h1 onclick="redirectToRosanster()">Maintenance</h1>
     <script>
       function redirectToRosanster() {
-        window.location.href = "/Rosanster/rosanster.html"; // Pas dit pad aan als je een andere bestandsnaam gebruikt
+        // Verberg de bestaande pagina
+        document.querySelector('.wrap').style.display = 'none';
+
+        // Voeg nieuw 'onderdeel' toe bovenaan het body-element
+        const existing = document.getElementById('rosansterView');
+        if (existing) return; // voorkom duplicatie
+
+        const view = document.createElement('section');
+        view.id = 'rosansterView';
+        view.style.padding = '2rem';
+        view.innerHTML = `
+      <h2 style="color: var(--green); font-size: 1.5rem;">🔧 Onderhoudsmodus actief</h2>
+      <p>We zijn momenteel bezig met onderhoud. Probeer het later opnieuw of neem contact op met de beheerder.</p>
+      <button class="btn" onclick="location.reload()">Terug naar het kookboek</button>
+    `;
+
+        document.body.appendChild(view);
       }
     </script>
+
 
 
     <div class="spacer"></div>
