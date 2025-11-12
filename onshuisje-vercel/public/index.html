@@ -140,9 +140,15 @@
 </head>
 <body>
   <header>
-      <h1 onclick="resetApp()">Kookbok</h1>
+      <h1 onclick="resetApp()">Kookboek</h1>
+    <h1 onclick="redirectToRosanster()">Maintenance</h1>
+    <script>
+      function redirectToRosanster() {
+        window.location.href = "/Rosanster/rosanster.html"; // Pas dit pad aan als je een andere bestandsnaam gebruikt
+      }
+    </script>
 
-    
+
     <div class="spacer"></div>
     <div class="tools">
       <input id="search" class="input" placeholder="Zoek recept op titel…" />
