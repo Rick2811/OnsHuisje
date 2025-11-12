@@ -658,11 +658,11 @@ function render() {
   }
 }
 
-function resetApp() {
-  localStorage.removeItem(STORAGE_KEY);
-  // eslint-disable-next-line no-restricted-globals
-  location.reload();
-}
+// function resetApp() {
+//   localStorage.removeItem(STORAGE_KEY);
+//   // eslint-disable-next-line no-restricted-globals
+//   location.reload();
+// }
 
 // ========= LIJSTWEERGAVE =========
 function renderRecipes() {
