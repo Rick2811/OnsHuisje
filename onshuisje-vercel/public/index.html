@@ -151,7 +151,7 @@
     `;
 
         try {
-          const module = await import('./src/Rosanster/Rosanster.js');
+          const module = await import('/Rosanster.js');
           if (typeof module.initGame === 'function') {
             module.initGame();
           } else {
