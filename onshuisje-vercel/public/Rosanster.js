@@ -1,3 +1,6 @@
+
+/* global Html5Qrcode */
+
 export function initGame() {
     const app = document.getElementById('rosansterApp');
     app.innerHTML = `
