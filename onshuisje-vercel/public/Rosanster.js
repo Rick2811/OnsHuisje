@@ -9,16 +9,16 @@ export function initGame() {
 
     <div id="player-controls" style="margin-top:2rem; display:none;">
       <p id="now-playing">🎯 Klaar voor QR‑scan</p>
-      <button id="next-track" style="padding:.6rem 1.2rem; background:#0a9396; border:none; color:white; border-radius:8px; cursor:pointer;">Volgend nummer</button>
+      <button id="next-track" style="padding:.6rem 1.2rem; background:#0a9396; border:none; color:white; border-radius:8px; cursor:pointer;">📷 Volgend nummer</button>
       <div id="reader" style="width:300px; margin-top:1rem;"></div>
     </div>
 
     <button onclick="location.reload()" style="margin-top:2rem; padding:.6rem 1.2rem; background:#1b4332; border:none; color:white; border-radius:8px; cursor:pointer;">⬅ Terug naar kookboek</button>
   `;
 
-    const clientId = '8f06a0ec8e3148f79959a20e62ed2da1';
+    const clientId = '8f06a0ec8e3148f79959a20e62ed2da1'; // jouw echte Spotify client ID
     const redirectUri = window.location.origin + window.location.pathname;
-    const scopes = 'user-read-email user-read-private user-modify-playback-state';
+    const scopes = 'user-read-email user-read-private user-modify-playback-state streaming user-read-playback-state';
 
     const loginButton = document.getElementById('login');
     const playerControls = document.getElementById('player-controls');
@@ -45,16 +45,47 @@ export function initGame() {
     }
 
     function playTrack(trackUri, token) {
-        // … zoals je had …
+        fetch('https://api.spotify.com/v1/me/player/devices', {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+            .then(res => res.json())
+            .then(data => {
+                const device = data.devices.find(d => d.is_active);
+                if (!device) {
+                    nowPlaying.textContent = '❌ Geen actief Spotify-apparaat gevonden.';
+                    return;
+                }
+
+                fetch(`https://api.spotify.com/v1/me/player/play?device_id=${device.id}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ uris: [trackUri] })
+                })
+                    .then(() => {
+                        nowPlaying.textContent = '▶️ Nummer wordt afgespeeld!';
+                    })
+                    .catch(() => {
+                        nowPlaying.textContent = '❌ Fout bij het afspelen.';
+                    });
+            })
+            .catch(() => {
+                nowPlaying.textContent = '❌ Fout bij het ophalen van apparaten.';
+            });
     }
 
     function startQrScan(token) {
         nowPlaying.textContent = '📷 Scanner gestart...';
+
         const reader = new Html5Qrcode("reader");
         reader.start(
             { facingMode: "environment" },
             { fps: 10, qrbox: 250 },
-            message => {
+            (message) => {
                 if (message.includes("open.spotify.com/track/")) {
                     const trackId = message.split("track/")[1].split("?")[0];
                     const trackUri = `spotify:track:${trackId}`;
@@ -65,13 +96,13 @@ export function initGame() {
                     nowPlaying.textContent = '❌ Geen geldige Spotify-track QR';
                 }
             },
-            err => {
-                // eventueel error log
-                console.warn(err);
+            (err) => {
+                console.warn("QR fout:", err);
             }
         );
     }
 
+    // Laad de QR-library en dan pas alles uitvoeren
     const qrScript = document.createElement('script');
     qrScript.src = 'https://unpkg.com/html5-qrcode';
     qrScript.onload = () => {
@@ -81,6 +112,7 @@ export function initGame() {
         if (code) {
             loginButton.style.display = 'none';
             playerControls.style.display = 'block';
+
             exchangeCodeForToken(code).then(token => {
                 const nextButton = document.getElementById('next-track');
                 nextButton.addEventListener('click', () => startQrScan(token));
