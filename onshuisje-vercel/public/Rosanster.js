@@ -1,13 +1,3 @@
-/* global Spotify */
-
-
-class Html5Qrcode {
-    constructor(reader1) {
-        
-    }
-
-}
-
 export function initGame() {
     const app = document.getElementById('rosansterApp');
     app.innerHTML = `
@@ -15,20 +5,19 @@ export function initGame() {
     <p style="margin-bottom:2rem;">Scan een QR-code om een nummer af te spelen en raad het jaartal!</p>
     <button id="login" style="padding:.6rem 1.2rem; background:#1db954; border:none; color:white; border-radius:8px; cursor:pointer;">🔐 Login met Spotify</button>
     <div id="player-controls" style="margin-top:2rem; display:none;">
-      <p id="now-playing">⏳ Wacht op QR-scan...</p>
+      <p id="now-playing">⏳ QR-code gescand. Het nummer wordt afgespeeld...</p>
       <div id="reader" style="width:300px; margin-top:1rem;"></div>
     </div>
     <button onclick="location.reload()" style="margin-top:2rem; padding:.6rem 1.2rem; background:#1b4332; border:none; color:white; border-radius:8px; cursor:pointer;">⬅ Terug naar kookboek</button>
   `;
 
-    const clientId = 'YOUR_SPOTIFY_CLIENT_ID'; // 👈 VERANDER DIT
+    const clientId = '8f06a0ec8e3148f79959a20e62ed2da1'; // jouw echte Spotify client ID
     const redirectUri = window.location.origin + window.location.pathname;
-    const scopes = 'streaming user-read-email user-read-private';
+    const scopes = 'streaming user-read-email user-read-private user-modify-playback-state';
 
     const loginButton = document.getElementById('login');
     const playerControls = document.getElementById('player-controls');
     const nowPlaying = document.getElementById('now-playing');
-    let player, deviceId;
 
     function getTokenFromUrl() {
         const hash = window.location.hash;
@@ -42,38 +31,35 @@ export function initGame() {
         window.location.href = authUrl;
     }
 
-    function setupPlayer(token) {
-        window.onSpotifyWebPlaybackSDKReady = () => {
-            player = new Spotify.Player({
-                name: 'Hitster Remix Player',
-                getOAuthToken: cb => cb(token),
-                volume: 0.8
-            });
-
-            player.addListener('ready', ({ device_id }) => {
-                deviceId = device_id;
-                console.log('Ready with Device ID', device_id);
-                playerControls.style.display = 'block';
-                initQrScanner(token);
-            });
-
-            player.connect();
-        };
-    }
-
     function playTrack(trackUri, token) {
-        fetch(`https://api.spotify.com/v1/me/player/play?device_id=${deviceId}`, {
-            method: 'PUT',
-            body: JSON.stringify({ uris: [trackUri] }),
+        fetch('https://api.spotify.com/v1/me/player/devices', {
             headers: {
-                'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
             }
-        }).then(() => {
-            nowPlaying.textContent = '▶️ Afspelen: ' + trackUri;
-        }).catch(err => {
-            nowPlaying.textContent = '❌ Fout bij afspelen';
-        });
+        })
+            .then(res => res.json())
+            .then(data => {
+                const activeDevice = data.devices.find(d => d.is_active);
+                if (!activeDevice) {
+                    nowPlaying.textContent = '❌ Geen actief Spotify-apparaat gevonden. Open de Spotify-app op je telefoon of desktop.';
+                    return;
+                }
+
+                fetch(`https://api.spotify.com/v1/me/player/play?device_id=${activeDevice.id}`, {
+                    method: 'PUT',
+                    body: JSON.stringify({ uris: [trackUri] }),
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    }
+                })
+                    .then(() => {
+                        nowPlaying.textContent = '▶️ Nummer wordt afgespeeld op jouw Spotify-apparaat.';
+                    })
+                    .catch(err => {
+                        nowPlaying.textContent = '❌ Fout bij afspelen op apparaat.';
+                    });
+            });
     }
 
     function initQrScanner(token) {
@@ -101,13 +87,9 @@ export function initGame() {
     const token = getTokenFromUrl();
     if (token) {
         loginButton.style.display = 'none';
-        setupPlayer(token);
+        playerControls.style.display = 'block';
+        initQrScanner(token);
     }
-
-    // Spotify SDK script toevoegen
-    const sdk = document.createElement('script');
-    sdk.src = 'https://sdk.scdn.co/spotify-player.js';
-    document.head.appendChild(sdk);
 
     // QR-code script toevoegen
     const qrScript = document.createElement('script');
