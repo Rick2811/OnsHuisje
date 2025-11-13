@@ -1,3 +1,13 @@
+/* global Spotify */
+
+
+class Html5Qrcode {
+    constructor(reader1) {
+        
+    }
+
+}
+
 export function initGame() {
     const app = document.getElementById('rosansterApp');
     app.innerHTML = `
