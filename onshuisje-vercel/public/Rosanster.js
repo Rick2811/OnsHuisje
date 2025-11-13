@@ -1,4 +1,3 @@
-
 /* global Html5Qrcode */
 
 export function initGame() {
@@ -14,31 +13,37 @@ export function initGame() {
     <button onclick="location.reload()" style="margin-top:2rem; padding:.6rem 1.2rem; background:#1b4332; border:none; color:white; border-radius:8px; cursor:pointer;">⬅ Terug naar kookboek</button>
   `;
 
-    const clientId = '8f06a0ec8e3148f79959a20e62ed2da1'; // jouw echte Spotify client ID
+    const clientId = '8f06a0ec8e3148f79959a20e62ed2da1';
     const redirectUri = window.location.origin + window.location.pathname;
-    const scopes = 'streaming user-read-email user-read-private user-modify-playback-state';
+    const scopes = 'user-read-email user-read-private user-modify-playback-state';
 
     const loginButton = document.getElementById('login');
     const playerControls = document.getElementById('player-controls');
     const nowPlaying = document.getElementById('now-playing');
 
-    function getTokenFromUrl() {
-        const hash = window.location.hash;
-        if (!hash) return null;
-        const params = new URLSearchParams(hash.substring(1));
-        return params.get('access_token');
+    function getCodeFromUrl() {
+        const url = new URL(window.location.href);
+        return url.searchParams.get('code');
     }
 
     function redirectToSpotifyLogin() {
-        const authUrl = `https://accounts.spotify.com/authorize?client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&scope=${scopes}&response_type=token&show_dialog=true`;
+        const authUrl = `https://accounts.spotify.com/authorize?client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&scope=${scopes}&response_type=code&show_dialog=true`;
         window.location.href = authUrl;
+    }
+
+    async function exchangeCodeForToken(code) {
+        const res = await fetch('/api/spotify-token', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ code, redirectUri })
+        });
+        const data = await res.json();
+        return data.access_token;
     }
 
     function playTrack(trackUri, token) {
         fetch('https://api.spotify.com/v1/me/player/devices', {
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
+            headers: { 'Authorization': `Bearer ${token}` }
         })
             .then(res => res.json())
             .then(data => {
@@ -59,43 +64,41 @@ export function initGame() {
                     .then(() => {
                         nowPlaying.textContent = '▶️ Nummer wordt afgespeeld op jouw Spotify-apparaat.';
                     })
-                    .catch(err => {
+                    .catch(() => {
                         nowPlaying.textContent = '❌ Fout bij afspelen op apparaat.';
                     });
             });
     }
 
-    function initQrScanner(token) {
+    function startQR(token) {
         const reader = new Html5Qrcode("reader");
         reader.start(
             { facingMode: "environment" },
             { fps: 10, qrbox: 250 },
-            (message) => {
-                if (message.includes("open.spotify.com/track/")) {
-                    const trackId = message.split("track/")[1].split("?")[0];
-                    const trackUri = `spotify:track:${trackId}`;
-                    playTrack(trackUri, token);
+            msg => {
+                if (msg.includes("open.spotify.com/track/")) {
+                    const id = msg.split("track/")[1].split("?")[0];
+                    const uri = `spotify:track:${id}`;
+                    playTrack(uri, token);
                 } else {
                     nowPlaying.textContent = '❌ Geen geldige Spotify-track QR';
                 }
             },
-            (err) => {}
+            () => {}
         );
     }
 
-    loginButton.addEventListener('click', () => {
-        redirectToSpotifyLogin();
-    });
+    loginButton.addEventListener('click', redirectToSpotifyLogin);
 
-    const token = getTokenFromUrl();
-    if (token) {
+    const code = getCodeFromUrl();
+    if (code) {
         loginButton.style.display = 'none';
         playerControls.style.display = 'block';
-        initQrScanner(token);
+        exchangeCodeForToken(code).then(token => startQR(token));
     }
 
-    // QR-code script toevoegen
     const qrScript = document.createElement('script');
     qrScript.src = 'https://unpkg.com/html5-qrcode';
+    qrScript.onload = () => console.log('QR library loaded');
     document.head.appendChild(qrScript);
 }
